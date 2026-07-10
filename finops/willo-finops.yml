@@ -1,0 +1,101 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Willo
+providerId: willo
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Video Interviewing
+- Recruitment
+- HR Tech
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Willo spend. Willo is billed as a SaaS subscription (Growth,
+  Scale, or custom Enterprise), not as a per-call metered API. The Willo
+  Integration API V2 is included with a paid account - each user generates an
+  integration key from the Integrations page - so API usage does not carry a
+  separate line item; cost is driven by the subscription tier, seat count,
+  assessment allowance, and any add-ons (ID check, right-to-work check,
+  background check). Annual and multi-year prepay lower the effective monthly
+  rate. Enterprise adds unlimited users/assessments, SSO, a formal OpenAPI file,
+  and dedicated developer support under a negotiated contract.
+notes: >-
+  Per-unit API rates do not apply - Willo does not publish metered API pricing.
+  The dominant cost drivers are the plan tier, number of seats, assessment
+  volume, and optional verification add-ons. Verify current subscription prices
+  and add-on rates on the Willo pricing page during reconciliation.
+sources:
+- https://www.willo.video/pricing
+- https://www.willo.video/api
+- https://documenter.getpostman.com/view/7798010/VUjSEiSn
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Willo
+serviceCategory: HR Tech and Recruitment
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly or Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Willo Video Interviewing
+  ServiceCategory: HR Tech and Recruitment
+  ProviderName: Willo
+  PublisherName: Willo
+  InvoiceIssuerName: Willo
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: subscription
+  description: Recurring plan fee for the Willo tier (Growth, Scale, or Enterprise), billed monthly or annually.
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: seats
+  description: Number of users on the account, bounded by the plan (Growth up to 4, Scale up to 20, Enterprise unlimited).
+  unit: seats
+  aggregation: max
+  dimensions:
+  - account
+  - plan
+- name: assessments
+  description: Assessments included with the plan (Growth 2, Scale 10, Enterprise unlimited).
+  unit: assessments
+  aggregation: max
+  dimensions:
+  - account
+  - plan
+- name: verification_addons
+  description: Optional per-check add-ons such as ID check, right-to-work check, and background check.
+  unit: checks
+  aggregation: sum
+  dimensions:
+  - account
+  - type
+principles:
+- name: Visibility
+  description: Track the subscription tier, seat utilisation against the plan cap, and assessment consumption; monitor verification add-on volume separately.
+- name: Allocation
+  description: Use departments (Companies) and, for groups, child organisations to map interviewing spend to brands, geographies, or business units.
+- name: Optimization
+  description: Match the tier to hiring volume, right-size seats, prefer annual/multi-year prepay for the discount, and enable verification add-ons only where required.
+- name: Accountability
+  description: Assign an owner for the Willo account, review seat and assessment usage against the plan each cycle, and reconcile add-on charges.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

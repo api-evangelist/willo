@@ -1,0 +1,64 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Willo
+providerId: willo
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Video Interviewing
+- Recruitment
+- Rate Limiting
+- Quotas
+description: >-
+  Willo applies API throttling to the Willo Integration API V2 to keep
+  performance consistent across customers, but does not publish a fixed numeric
+  request-per-minute limit in its public reference. Willo explicitly warns that
+  continuously polling an endpoint for updates, regularly scanning jobs for new
+  or deleted responses, and issuing concurrent calls are the patterns most likely
+  to trigger throttling. The documented guidance is to use webhooks (New
+  Response, Stage Change, New Comment, New Score) for change tracking rather than
+  polling, and to contact Willo to discuss an increased limit for higher-volume
+  needs. Throttled requests return HTTP 429.
+notes: >-
+  No exact per-account or per-endpoint numeric limit is documented as of the
+  review date. Design clients around webhooks for change notifications, avoid
+  concurrent bursts, and implement exponential backoff on 429 responses. Confirm
+  any negotiated limits with Willo for high-volume integrations.
+sources:
+- https://documenter.getpostman.com/view/7798010/VUjSEiSn
+- https://www.willo.video/api
+responseCodes:
+  throttled: 429
+limits:
+- name: Integration API Requests
+  scope: account
+  metric: requests
+  limit: not published (throttled)
+  notes: Willo throttles the API but does not document a fixed numeric request rate in its public reference.
+- name: Polling Behaviour
+  scope: account
+  metric: requests
+  limit: discouraged
+  notes: Continuous polling and repeated job/response scans are the patterns most likely to be throttled.
+- name: Concurrent Requests
+  scope: account
+  metric: concurrency
+  limit: discouraged
+  notes: Concurrent calls raise requests-per-unit-time and are more likely to be throttled.
+- name: Higher-Volume Limit
+  scope: account
+  metric: requests
+  limit: negotiable
+  notes: Contact Willo to discuss an increased rate limit for higher-volume demands.
+policies:
+- name: Prefer Webhooks Over Polling
+  description: Willo recommends subscribing to webhooks for change tracking and notifications instead of polling endpoints for updates.
+- name: Backoff Strategy
+  description: On a 429 response, back off exponentially with jitter before retrying rather than retrying immediately.
+- name: Avoid Concurrency Bursts
+  description: Serialise requests where possible; avoid large numbers of concurrent calls that spike requests per unit time.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

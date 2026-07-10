@@ -1,0 +1,530 @@
+{
+  "info": {
+    "name": "Willo Integration API V2",
+    "description": "Public REST API for the Willo asynchronous video interviewing platform. Manage departments (companies), interviews (jobs and their questions), participants (candidates) and their video responses / IDV media, message templates, users, webhooks, interview templates, and child organisations. Base URL: https://api.willotalent.com/api/integrations/v2 (staging: https://api.stage.willotalent.com/api/integrations/v2). Authentication is by an integration key (API key) from the Willo Integrations page, sent in the Authorization header over HTTPS. Endpoints and auth are confirmed from Willo's published Postman reference; request bodies are illustrative.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.willotalent.com/api/integrations/v2", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/departments/", "host": ["{{baseUrl}}"], "path": ["departments", ""] },
+            "description": "Lists the departments (Companies) in the account."
+          }
+        },
+        {
+          "name": "Create Department",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme UK\",\n  \"is_global\": false\n}" },
+            "url": { "raw": "{{baseUrl}}/departments/", "host": ["{{baseUrl}}"], "path": ["departments", ""] },
+            "description": "Creates a new department (Company)."
+          }
+        },
+        {
+          "name": "Department Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/departments/:key/", "host": ["{{baseUrl}}"], "path": ["departments", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves a single department by key."
+          }
+        },
+        {
+          "name": "Update Department (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme UK\",\n  \"is_global\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/departments/:key/", "host": ["{{baseUrl}}"], "path": ["departments", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Fully replaces a department."
+          }
+        },
+        {
+          "name": "Update Department (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"is_global\": true\n}" },
+            "url": { "raw": "{{baseUrl}}/departments/:key/", "host": ["{{baseUrl}}"], "path": ["departments", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Partially updates a department."
+          }
+        },
+        {
+          "name": "Delete Department",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/departments/:key/", "host": ["{{baseUrl}}"], "path": ["departments", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Deletes a department."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Interviews",
+      "item": [
+        {
+          "name": "List Interviews",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/interviews/", "host": ["{{baseUrl}}"], "path": ["interviews", ""] },
+            "description": "Lists interviews (jobs) accessible to the API key."
+          }
+        },
+        {
+          "name": "Create Interview",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Customer Support Agent\",\n  \"questions\": [\n    { \"prompt\": \"Tell us about yourself.\", \"type\": \"video\", \"max_duration\": 120 }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/interviews/", "host": ["{{baseUrl}}"], "path": ["interviews", ""] },
+            "description": "Creates an interview with a list of pre-defined questions."
+          }
+        },
+        {
+          "name": "Interview Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/interviews/:key/", "host": ["{{baseUrl}}"], "path": ["interviews", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves a single interview, including its questions."
+          }
+        },
+        {
+          "name": "Update Interview (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Customer Support Agent (v2)\"\n}" },
+            "url": { "raw": "{{baseUrl}}/interviews/:key/", "host": ["{{baseUrl}}"], "path": ["interviews", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Fully replaces an interview."
+          }
+        },
+        {
+          "name": "Update Interview (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Customer Support Agent (updated)\"\n}" },
+            "url": { "raw": "{{baseUrl}}/interviews/:key/", "host": ["{{baseUrl}}"], "path": ["interviews", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Partially updates an interview."
+          }
+        },
+        {
+          "name": "Delete Interview",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/interviews/:key/", "host": ["{{baseUrl}}"], "path": ["interviews", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Deletes an interview."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Participants",
+      "item": [
+        {
+          "name": "List Participants",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/participants/", "host": ["{{baseUrl}}"], "path": ["participants", ""] },
+            "description": "Lists participants (candidates) accessible to the API key."
+          }
+        },
+        {
+          "name": "Invite Participant",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Jane\",\n  \"last_name\": \"Doe\",\n  \"email\": \"jane@example.com\",\n  \"interview\": \"INTERVIEW_KEY\"\n}" },
+            "url": { "raw": "{{baseUrl}}/participants/", "host": ["{{baseUrl}}"], "path": ["participants", ""] },
+            "description": "Invites a participant to an interview."
+          }
+        },
+        {
+          "name": "Participant Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/participants/:key/", "host": ["{{baseUrl}}"], "path": ["participants", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves a participant, including their video responses when completed."
+          }
+        },
+        {
+          "name": "Update Participant (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"stage\": \"Shortlisted\"\n}" },
+            "url": { "raw": "{{baseUrl}}/participants/:key/", "host": ["{{baseUrl}}"], "path": ["participants", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Fully replaces a participant."
+          }
+        },
+        {
+          "name": "Update Participant (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"stage\": \"Interview\"\n}" },
+            "url": { "raw": "{{baseUrl}}/participants/:key/", "host": ["{{baseUrl}}"], "path": ["participants", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Partially updates a participant (for example, changes their stage)."
+          }
+        },
+        {
+          "name": "Delete Participant",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/participants/:key/", "host": ["{{baseUrl}}"], "path": ["participants", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Deletes a participant."
+          }
+        },
+        {
+          "name": "Participant Identity Verification Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/participants/:key/idv-info/", "host": ["{{baseUrl}}"], "path": ["participants", ":key", "idv-info", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves the IDV result and metadata for a participant."
+          }
+        },
+        {
+          "name": "Participant Identity Verification Media",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/participants/:key/idv-media/", "host": ["{{baseUrl}}"], "path": ["participants", ":key", "idv-media", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves the IDV media references for a participant."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Message Templates",
+      "item": [
+        {
+          "name": "List Templates",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/message-templates/", "host": ["{{baseUrl}}"], "path": ["message-templates", ""] },
+            "description": "Lists the invite, reminder, and success message templates."
+          }
+        },
+        {
+          "name": "Create Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Custom Invite\",\n  \"type\": \"invite\",\n  \"subject\": \"You're invited\"\n}" },
+            "url": { "raw": "{{baseUrl}}/message-templates/", "host": ["{{baseUrl}}"], "path": ["message-templates", ""] },
+            "description": "Creates a new message template."
+          }
+        },
+        {
+          "name": "Template Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/message-templates/:key/", "host": ["{{baseUrl}}"], "path": ["message-templates", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves a single message template."
+          }
+        },
+        {
+          "name": "Update Message Template (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Custom Invite\",\n  \"type\": \"invite\",\n  \"subject\": \"You are invited\"\n}" },
+            "url": { "raw": "{{baseUrl}}/message-templates/:key/", "host": ["{{baseUrl}}"], "path": ["message-templates", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Fully replaces a message template."
+          }
+        },
+        {
+          "name": "Update Message Template (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"subject\": \"You are invited to interview\"\n}" },
+            "url": { "raw": "{{baseUrl}}/message-templates/:key/", "host": ["{{baseUrl}}"], "path": ["message-templates", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Partially updates a message template."
+          }
+        },
+        {
+          "name": "Delete Message Template",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/message-templates/:key/", "host": ["{{baseUrl}}"], "path": ["message-templates", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Deletes a message template."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/users/", "host": ["{{baseUrl}}"], "path": ["users", ""] },
+            "description": "Lists the users in the account."
+          }
+        },
+        {
+          "name": "Invite User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"teammate@example.com\",\n  \"role\": \"standard\"\n}" },
+            "url": { "raw": "{{baseUrl}}/users/", "host": ["{{baseUrl}}"], "path": ["users", ""] },
+            "description": "Invites a new user with a given role."
+          }
+        },
+        {
+          "name": "User Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/users/:key/", "host": ["{{baseUrl}}"], "path": ["users", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves a single user."
+          }
+        },
+        {
+          "name": "Update User (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"role\": \"admin\"\n}" },
+            "url": { "raw": "{{baseUrl}}/users/:key/", "host": ["{{baseUrl}}"], "path": ["users", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Partially updates a user."
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/users/:key/", "host": ["{{baseUrl}}"], "path": ["users", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Removes a user from the account."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "List Webhooks",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/webhooks/", "host": ["{{baseUrl}}"], "path": ["webhooks", ""] },
+            "description": "Lists the configured webhook subscriptions."
+          }
+        },
+        {
+          "name": "Create Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"target_url\": \"https://example.com/hooks/willo\",\n  \"trigger\": \"new_response\"\n}" },
+            "url": { "raw": "{{baseUrl}}/webhooks/", "host": ["{{baseUrl}}"], "path": ["webhooks", ""] },
+            "description": "Subscribes an endpoint to a Willo event trigger (new_response, stage_change, new_comment, new_score)."
+          }
+        },
+        {
+          "name": "Update Webhook (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"target_url\": \"https://example.com/hooks/willo\",\n  \"trigger\": \"new_score\"\n}" },
+            "url": { "raw": "{{baseUrl}}/webhooks/:key/", "host": ["{{baseUrl}}"], "path": ["webhooks", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Fully replaces a webhook subscription."
+          }
+        },
+        {
+          "name": "Update Webhook (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"is_active\": false\n}" },
+            "url": { "raw": "{{baseUrl}}/webhooks/:key/", "host": ["{{baseUrl}}"], "path": ["webhooks", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Partially updates a webhook subscription."
+          }
+        },
+        {
+          "name": "Delete Webhook",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/webhooks/:key/", "host": ["{{baseUrl}}"], "path": ["webhooks", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Deletes a webhook subscription."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Interview Templates",
+      "item": [
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/categories/", "host": ["{{baseUrl}}"], "path": ["categories", ""] },
+            "description": "Lists the categories used to organise interview templates."
+          }
+        },
+        {
+          "name": "List Templates",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/interview-templates/", "host": ["{{baseUrl}}"], "path": ["interview-templates", ""] },
+            "description": "Lists the available pre-built interview templates."
+          }
+        },
+        {
+          "name": "Get Template Details",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/interview-templates/:key/", "host": ["{{baseUrl}}"], "path": ["interview-templates", ":key", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Retrieves a single interview template, including its questions."
+          }
+        },
+        {
+          "name": "Create Interview from Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Sales Rep (from template)\"\n}" },
+            "url": { "raw": "{{baseUrl}}/interview-templates/:key/interviews/", "host": ["{{baseUrl}}"], "path": ["interview-templates", ":key", "interviews", ""], "variable": [{ "key": "key", "value": "" }] },
+            "description": "Creates an interview pre-populated from the given template."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Child Organisations",
+      "item": [
+        {
+          "name": "List Children",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/children/", "host": ["{{baseUrl}}"], "path": ["children", ""] },
+            "description": "Lists organisations created under the parent organisation."
+          }
+        },
+        {
+          "name": "Create Child Organisation",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{apiKey}}", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme Sub-brand\"\n}" },
+            "url": { "raw": "{{baseUrl}}/children/", "host": ["{{baseUrl}}"], "path": ["children", ""] },
+            "description": "Creates a new organisation under the parent organisation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reference",
+      "item": [
+        {
+          "name": "List Languages",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/languages/", "host": ["{{baseUrl}}"], "path": ["languages", ""] },
+            "description": "Lists the languages supported for interviews and communications."
+          }
+        },
+        {
+          "name": "List IDV Countries",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "{{apiKey}}", "type": "text" }],
+            "url": { "raw": "{{baseUrl}}/idv-counties/", "host": ["{{baseUrl}}"], "path": ["idv-counties", ""] },
+            "description": "Lists the countries of employment supported for identity verification."
+          }
+        }
+      ]
+    }
+  ]
+}

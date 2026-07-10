@@ -1,0 +1,154 @@
+aid: willo
+name: Willo
+review:
+  question: Does Willo expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-10'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Willo's public developer surface - the
+    Willo Integration API V2 - is request/response REST over HTTPS. Willo's
+    real-time / event story is delivered by outbound webhooks (New Response,
+    Stage Change, New Comment, New Score), which POST an event payload to a
+    third-party HTTPS endpoint. There is no server-push WebSocket (ws:// or
+    wss://) transport documented on Willo's own API to model, so no AsyncAPI
+    document was created. The webhook triggers are captured in the review and
+    in the Webhooks resource of the OpenAPI instead.
+findings:
+  summary: |
+    Willo does not publish a documented public WebSocket API. Willo is an
+    asynchronous ("one-way") video interviewing platform. Its public API is the
+    Willo Integration API V2, a REST API at
+    https://api.willotalent.com/api/integrations/v2 (staging at
+    https://api.stage.willotalent.com/api/integrations/v2). Authentication is by
+    an integration key ("API key") sent in the Authorization header; each user
+    has their own key, issued and cycled on the Willo Integrations page
+    (https://app.willotalent.com/integrations). All calls must be over HTTPS.
+    The API is pure request/response REST covering Departments, Interviews,
+    Participants (candidates) and their responses / IDV media, Message Templates,
+    Users, Webhooks, Interview Templates, Child Organisations, plus Languages and
+    IDV-country reference lists. Change notifications are delivered by outbound
+    webhooks, not by a bidirectional or streaming socket. No ws:// or wss://
+    endpoint is documented anywhere in Willo's API reference.
+  accessModel: |
+    The API reference is public and self-serve: the full Postman documentation
+    (documenter.getpostman.com/view/7798010/VUjSEiSn) is openly readable and an
+    integration key is generated from a Willo account's Integrations page. Willo
+    markets the API broadly ("thousands of organisations use the Willo API").
+    Practically, deeper API use is tier-gated: Willo's pricing lists a formal
+    OpenAPI file, SSO, dedicated developer support, and longer data retention as
+    Enterprise-plan features, while paid self-serve plans (Growth, Scale) provide
+    the account and integration key. Endpoint paths, methods, auth, status codes,
+    and webhook triggers are confirmed from the published reference; request and
+    response body schemas in the OpenAPI here are modeled from Willo's documented
+    resource glossary and marked illustrative.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.willotalent.com/api/integrations/v2
+      documented: true
+      note: Willo Integration API V2. Staging base is https://api.stage.willotalent.com/api/integrations/v2.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Outbound event notifications (new response, stage change, new comment, new score) POSTed to a third-party endpoint. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Willo's Integration API V2 reference as of the review date.
+  authentication:
+    scheme: API Key
+    header: Authorization
+    note: Integration key from the Willo Integrations page; each user has their own key with that user's permissions.
+  webhookTriggers:
+    - name: New Response
+      note: A new interview response is received from a participant.
+    - name: Stage Change
+      note: A participant is moved to a different stage on the Willo Kanban board.
+    - name: New Comment
+      note: A participant receives a comment from a member of the hiring team.
+    - name: New Score
+      note: A participant receives a score from a member of the hiring team.
+  statusCodes:
+    - '200 OK'
+    - '201 Created'
+    - '400 Bad Request'
+    - '401 Unauthorised'
+    - '403 Forbidden'
+    - '404 Not Found'
+    - '429 Too Many Requests'
+  endpointsConfirmedRest:
+    - GET    https://api.willotalent.com/api/integrations/v2/departments/
+    - POST   https://api.willotalent.com/api/integrations/v2/departments/
+    - GET    https://api.willotalent.com/api/integrations/v2/departments/{key}/
+    - PUT    https://api.willotalent.com/api/integrations/v2/departments/{key}/
+    - PATCH  https://api.willotalent.com/api/integrations/v2/departments/{key}/
+    - DELETE https://api.willotalent.com/api/integrations/v2/departments/{key}/
+    - GET    https://api.willotalent.com/api/integrations/v2/interviews/
+    - POST   https://api.willotalent.com/api/integrations/v2/interviews/
+    - GET    https://api.willotalent.com/api/integrations/v2/interviews/{key}/
+    - PUT    https://api.willotalent.com/api/integrations/v2/interviews/{key}/
+    - PATCH  https://api.willotalent.com/api/integrations/v2/interviews/{key}/
+    - DELETE https://api.willotalent.com/api/integrations/v2/interviews/{key}/
+    - GET    https://api.willotalent.com/api/integrations/v2/participants/
+    - POST   https://api.willotalent.com/api/integrations/v2/participants/
+    - GET    https://api.willotalent.com/api/integrations/v2/participants/{key}/
+    - PUT    https://api.willotalent.com/api/integrations/v2/participants/{key}/
+    - PATCH  https://api.willotalent.com/api/integrations/v2/participants/{key}/
+    - DELETE https://api.willotalent.com/api/integrations/v2/participants/{key}/
+    - GET    https://api.willotalent.com/api/integrations/v2/participants/{key}/idv-info/
+    - GET    https://api.willotalent.com/api/integrations/v2/participants/{key}/idv-media/
+    - GET    https://api.willotalent.com/api/integrations/v2/message-templates/
+    - POST   https://api.willotalent.com/api/integrations/v2/message-templates/
+    - GET    https://api.willotalent.com/api/integrations/v2/message-templates/{key}/
+    - PUT    https://api.willotalent.com/api/integrations/v2/message-templates/{key}/
+    - PATCH  https://api.willotalent.com/api/integrations/v2/message-templates/{key}/
+    - DELETE https://api.willotalent.com/api/integrations/v2/message-templates/{key}/
+    - GET    https://api.willotalent.com/api/integrations/v2/users/
+    - POST   https://api.willotalent.com/api/integrations/v2/users/
+    - GET    https://api.willotalent.com/api/integrations/v2/users/{key}/
+    - PATCH  https://api.willotalent.com/api/integrations/v2/users/{key}/
+    - DELETE https://api.willotalent.com/api/integrations/v2/users/{key}/
+    - GET    https://api.willotalent.com/api/integrations/v2/webhooks/
+    - POST   https://api.willotalent.com/api/integrations/v2/webhooks/
+    - PUT    https://api.willotalent.com/api/integrations/v2/webhooks/{key}/
+    - PATCH  https://api.willotalent.com/api/integrations/v2/webhooks/{key}/
+    - DELETE https://api.willotalent.com/api/integrations/v2/webhooks/{key}/
+    - GET    https://api.willotalent.com/api/integrations/v2/categories/
+    - GET    https://api.willotalent.com/api/integrations/v2/interview-templates/
+    - GET    https://api.willotalent.com/api/integrations/v2/interview-templates/{key}/
+    - POST   https://api.willotalent.com/api/integrations/v2/interview-templates/{key}/interviews/
+    - GET    https://api.willotalent.com/api/integrations/v2/children/
+    - POST   https://api.willotalent.com/api/integrations/v2/children/
+    - GET    https://api.willotalent.com/api/integrations/v2/languages/
+    - GET    https://api.willotalent.com/api/integrations/v2/idv-counties/
+sources:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+    note: Willo Integration API V2 Postman reference - auth, rate-limit guidance, status codes, glossary, and all resource endpoints.
+  - url: https://www.willo.video/api
+    type: Documentation
+    note: Willo Video Interview API marketing/overview page; API-key auth, integration use cases.
+  - url: https://support.willo.video/article/72-get-my-api-key
+    type: Documentation
+    note: How to obtain and manage the integration (API) key from the Willo Integrations page.
+  - url: https://www.willo.video/pricing
+    type: Pricing
+    note: Growth, Scale, and Enterprise plans; OpenAPI, SSO, and developer support listed as Enterprise features.
+  - url: https://developers.willo.video/
+    type: DeveloperPortal
+    note: Developer resources hub (would not resolve over HTTPS at review time; canonical reference is the Postman documenter).
+  - url: https://status.willo.video/
+    type: StatusPage
+    note: Willo system status page.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists on Willo's own API. The public Willo
+    Integration API V2 is request/response REST, and Willo's event delivery is
+    handled by outbound webhooks rather than a server-push socket. No AsyncAPI
+    document was created because there is no bidirectional or streaming WebSocket
+    transport to model; the webhook triggers are recorded in this review and in
+    the Webhooks resource of the OpenAPI.

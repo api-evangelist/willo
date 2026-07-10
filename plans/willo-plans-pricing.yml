@@ -1,0 +1,203 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Willo
+providerId: willo
+created: '2026-07-10'
+modified: '2026-07-10'
+reconciled: false
+tags:
+- Video Interviewing
+- Recruitment
+- HR Tech
+- Plans
+description: >-
+  Willo sells the platform (not the API by itself) on published monthly and
+  annual subscription tiers - Growth, Scale, and a custom Enterprise plan - plus
+  a 50% non-profit discount. A Willo account provides the Integrations page where
+  each user generates an integration key ("API key") for the Willo Integration
+  API V2. Some deeper developer features are tier-gated: Willo's pricing page
+  lists a formal OpenAPI file, SSO, dedicated developer support, and 12+ month
+  data retention as Enterprise-plan features, while Growth and Scale provide the
+  account, integration key, and integrations. Prices below are grounded from the
+  Willo pricing page (USD headline shown; Willo also quotes GBP, EUR, and AUD).
+  Confirm current numbers during reconciliation.
+notes: >-
+  The API itself has no separate metered fee documented; access follows the
+  account subscription. Annual and multi-year billing lowers the effective
+  monthly rate (Willo advertises 3 months free on 1- or 2-year prepay). Verify
+  seat counts, assessment allowances, and which developer features (OpenAPI file,
+  developer support) require Enterprise on the live pricing page.
+sources:
+- https://www.willo.video/pricing
+- https://www.willo.video/api
+- https://documenter.getpostman.com/view/7798010/VUjSEiSn
+plans:
+- id: willo-growth
+  name: Growth
+  type: paid
+  description: >-
+    Entry paid tier for teams hiring roughly 100-1,000 people a year. Includes
+    the assessment library, email/SMS invites, 18+ languages, Willo Intelligence
+    (transcribe, summarise, benchmark), MFA, Willo Proof, and ISO 27001
+    certification. Provides the account and integration key used with the API.
+  entries:
+  - label: Subscription (Monthly)
+    name: growth_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: USD
+    price: '279'
+    userMultiplied: false
+  - label: Subscription (Annual, per month)
+    name: growth_annual
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: USD
+    price: '209'
+    userMultiplied: false
+  - label: Included Users
+    name: growth_users
+    type: flat
+    metric: seats
+    limit: 4
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: up to 4 users
+    userMultiplied: false
+  - label: Included Assessments
+    name: growth_assessments
+    type: flat
+    metric: assessments
+    limit: 2
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2 assessments included
+    userMultiplied: false
+  elements:
+  - name: Assessment Library
+  - name: Email and SMS Invites
+  - name: 18+ Languages
+  - name: Willo Intelligence
+  - name: MFA
+  - name: ISO 27001 Certified
+  - name: Integration Key (API access)
+- id: willo-scale
+  name: Scale
+  type: paid
+  description: >-
+    Mid tier for teams hiring roughly 1,000-5,000+ a year. Adds custom
+    scorecards, custom branding, 6-month data retention, an onboarding
+    specialist, and a wider set of ATS integrations (Ashby, Lever, Pinpoint,
+    BambooHR, Greenhouse, and others) on top of Growth.
+  entries:
+  - label: Subscription (Monthly)
+    name: scale_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: USD
+    price: '409'
+    userMultiplied: false
+  - label: Subscription (Annual, per month)
+    name: scale_annual
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: USD
+    price: '307'
+    userMultiplied: false
+  - label: Included Users
+    name: scale_users
+    type: flat
+    metric: seats
+    limit: 20
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: up to 20 users
+    userMultiplied: false
+  - label: Included Assessments
+    name: scale_assessments
+    type: flat
+    metric: assessments
+    limit: 10
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 10 assessments included
+    userMultiplied: false
+  elements:
+  - name: Everything in Growth
+  - name: Custom Scorecards
+  - name: Custom Branding
+  - name: 6-Month Data Retention
+  - name: Onboarding Specialist
+  - name: ATS Integrations
+- id: willo-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Custom plan for high-volume and regulated buyers. Unlimited users and
+    assessments, anti-cheat, SSO, 12+ month data retention, dedicated developer
+    support and customer success, a formal OpenAPI specification, and enterprise
+    ATS/HRIS integrations (Workday, SAP SuccessFactors, Oracle, iCIMS).
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Unlimited Users
+  - name: Unlimited Assessments
+  - name: SSO
+  - name: OpenAPI Specification
+  - name: Dedicated Developer Support
+  - name: Anti-Cheat
+  - name: 12+ Month Data Retention
+  - name: Enterprise Integrations
+- id: willo-nonprofit
+  name: Non-profit Program
+  type: discount
+  description: >-
+    50% discount on a paid Willo plan for eligible non-profit organisations.
+    Application required.
+  entries:
+  - label: Non-profit Discount
+    name: nonprofit_discount
+    type: flat
+    metric: discount
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 50% off an eligible paid plan
+    userMultiplied: false
+  elements:
+  - name: 50% Discount
+  - name: Eligibility Review
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

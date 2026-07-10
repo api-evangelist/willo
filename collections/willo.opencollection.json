@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "in": "header",
+        "key": "Authorization",
+        "value": "{{apiKey}}"
+      }
+    },
+    "baseUrl": "https://api.willotalent.com/api/integrations/v2"
+  },
+  "items": [
+    {
+      "info": { "name": "Departments", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Departments", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/departments/" },
+          "docs": "Lists the departments (Companies) in the account."
+        },
+        {
+          "info": { "name": "Create Department", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/departments/", "body": { "type": "json", "data": "{ \"name\": \"Acme UK\", \"is_global\": false }" } },
+          "docs": "Creates a new department (Company)."
+        },
+        {
+          "info": { "name": "Department Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/departments/:key/", "params": [{ "name": "key", "value": "", "type": "path", "description": "The department key." }] },
+          "docs": "Retrieves a single department by key."
+        },
+        {
+          "info": { "name": "Update Department (PUT)", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.willotalent.com/api/integrations/v2/departments/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"name\": \"Acme UK\", \"is_global\": true }" } },
+          "docs": "Fully replaces a department."
+        },
+        {
+          "info": { "name": "Update Department (PATCH)", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.willotalent.com/api/integrations/v2/departments/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"is_global\": true }" } },
+          "docs": "Partially updates a department."
+        },
+        {
+          "info": { "name": "Delete Department", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.willotalent.com/api/integrations/v2/departments/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Deletes a department."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Interviews", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Interviews", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/interviews/" },
+          "docs": "Lists interviews (jobs) accessible to the API key."
+        },
+        {
+          "info": { "name": "Create Interview", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/interviews/", "body": { "type": "json", "data": "{ \"title\": \"Customer Support Agent\", \"questions\": [ { \"prompt\": \"Tell us about yourself.\", \"type\": \"video\", \"max_duration\": 120 } ] }" } },
+          "docs": "Creates an interview with a list of pre-defined questions."
+        },
+        {
+          "info": { "name": "Interview Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/interviews/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves a single interview, including its questions."
+        },
+        {
+          "info": { "name": "Update Interview (PUT)", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.willotalent.com/api/integrations/v2/interviews/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"title\": \"Customer Support Agent (v2)\" }" } },
+          "docs": "Fully replaces an interview."
+        },
+        {
+          "info": { "name": "Update Interview (PATCH)", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.willotalent.com/api/integrations/v2/interviews/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"title\": \"Customer Support Agent (updated)\" }" } },
+          "docs": "Partially updates an interview."
+        },
+        {
+          "info": { "name": "Delete Interview", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.willotalent.com/api/integrations/v2/interviews/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Deletes an interview."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Participants", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Participants", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/participants/" },
+          "docs": "Lists participants (candidates) accessible to the API key."
+        },
+        {
+          "info": { "name": "Invite Participant", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/participants/", "body": { "type": "json", "data": "{ \"first_name\": \"Jane\", \"last_name\": \"Doe\", \"email\": \"jane@example.com\", \"interview\": \"INTERVIEW_KEY\" }" } },
+          "docs": "Invites a participant to an interview."
+        },
+        {
+          "info": { "name": "Participant Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves a participant, including their video responses when completed."
+        },
+        {
+          "info": { "name": "Update Participant (PUT)", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"stage\": \"Shortlisted\" }" } },
+          "docs": "Fully replaces a participant."
+        },
+        {
+          "info": { "name": "Update Participant (PATCH)", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"stage\": \"Interview\" }" } },
+          "docs": "Partially updates a participant (for example, changes their stage)."
+        },
+        {
+          "info": { "name": "Delete Participant", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Deletes a participant."
+        },
+        {
+          "info": { "name": "Participant Identity Verification Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/idv-info/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves the IDV result and metadata for a participant."
+        },
+        {
+          "info": { "name": "Participant Identity Verification Media", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/idv-media/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves the IDV media references for a participant."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Message Templates", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Templates", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/message-templates/" },
+          "docs": "Lists the invite, reminder, and success message templates."
+        },
+        {
+          "info": { "name": "Create Template", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/message-templates/", "body": { "type": "json", "data": "{ \"name\": \"Custom Invite\", \"type\": \"invite\", \"subject\": \"You're invited\" }" } },
+          "docs": "Creates a new message template."
+        },
+        {
+          "info": { "name": "Template Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves a single message template."
+        },
+        {
+          "info": { "name": "Update Message Template (PUT)", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"name\": \"Custom Invite\", \"type\": \"invite\", \"subject\": \"You are invited\" }" } },
+          "docs": "Fully replaces a message template."
+        },
+        {
+          "info": { "name": "Update Message Template (PATCH)", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"subject\": \"You are invited to interview\" }" } },
+          "docs": "Partially updates a message template."
+        },
+        {
+          "info": { "name": "Delete Message Template", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Deletes a message template."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Users", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Users", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/users/" },
+          "docs": "Lists the users in the account."
+        },
+        {
+          "info": { "name": "Invite User", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/users/", "body": { "type": "json", "data": "{ \"email\": \"teammate@example.com\", \"role\": \"standard\" }" } },
+          "docs": "Invites a new user with a given role."
+        },
+        {
+          "info": { "name": "User Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/users/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves a single user."
+        },
+        {
+          "info": { "name": "Update User (PATCH)", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.willotalent.com/api/integrations/v2/users/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"role\": \"admin\" }" } },
+          "docs": "Partially updates a user."
+        },
+        {
+          "info": { "name": "Delete User", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.willotalent.com/api/integrations/v2/users/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Removes a user from the account."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Webhooks", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Webhooks", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/webhooks/" },
+          "docs": "Lists the configured webhook subscriptions."
+        },
+        {
+          "info": { "name": "Create Webhook", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/webhooks/", "body": { "type": "json", "data": "{ \"target_url\": \"https://example.com/hooks/willo\", \"trigger\": \"new_response\" }" } },
+          "docs": "Subscribes an endpoint to a Willo event trigger (new_response, stage_change, new_comment, new_score)."
+        },
+        {
+          "info": { "name": "Update Webhook (PUT)", "type": "http" },
+          "http": { "method": "PUT", "url": "https://api.willotalent.com/api/integrations/v2/webhooks/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"target_url\": \"https://example.com/hooks/willo\", \"trigger\": \"new_score\" }" } },
+          "docs": "Fully replaces a webhook subscription."
+        },
+        {
+          "info": { "name": "Update Webhook (PATCH)", "type": "http" },
+          "http": { "method": "PATCH", "url": "https://api.willotalent.com/api/integrations/v2/webhooks/:key/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"is_active\": false }" } },
+          "docs": "Partially updates a webhook subscription."
+        },
+        {
+          "info": { "name": "Delete Webhook", "type": "http" },
+          "http": { "method": "DELETE", "url": "https://api.willotalent.com/api/integrations/v2/webhooks/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Deletes a webhook subscription."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Interview Templates", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Categories", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/categories/" },
+          "docs": "Lists the categories used to organise interview templates."
+        },
+        {
+          "info": { "name": "List Templates", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/interview-templates/" },
+          "docs": "Lists the available pre-built interview templates."
+        },
+        {
+          "info": { "name": "Get Template Details", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/interview-templates/:key/", "params": [{ "name": "key", "value": "", "type": "path" }] },
+          "docs": "Retrieves a single interview template, including its questions."
+        },
+        {
+          "info": { "name": "Create Interview from Template", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/interview-templates/:key/interviews/", "params": [{ "name": "key", "value": "", "type": "path" }], "body": { "type": "json", "data": "{ \"title\": \"Sales Rep (from template)\" }" } },
+          "docs": "Creates an interview pre-populated from the given template."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Child Organisations", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Children", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/children/" },
+          "docs": "Lists organisations created under the parent organisation."
+        },
+        {
+          "info": { "name": "Create Child Organisation", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.willotalent.com/api/integrations/v2/children/", "body": { "type": "json", "data": "{ \"name\": \"Acme Sub-brand\" }" } },
+          "docs": "Creates a new organisation under the parent organisation."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Reference", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List Languages", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/languages/" },
+          "docs": "Lists the languages supported for interviews and communications."
+        },
+        {
+          "info": { "name": "List IDV Countries", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.willotalent.com/api/integrations/v2/idv-counties/" },
+          "docs": "Lists the countries of employment supported for identity verification."
+        }
+      ]
+    }
+  ]
+}

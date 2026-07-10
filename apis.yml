@@ -1,0 +1,226 @@
+aid: willo
+url: https://raw.githubusercontent.com/api-evangelist/willo/refs/heads/main/apis.yml
+name: Willo
+kind: company
+description: Willo is an asynchronous ("one-way") video interviewing and screening
+  platform that lets teams invite candidates to record answers to pre-defined
+  questions on any browser or device with no downloads, apps, or login required.
+  The Willo Integration API V2 exposes the platform's UI actions as a public REST
+  API so you can embed video interviewing into a job board, ATS, CRM, or staffing
+  platform - managing Departments (Companies), Interviews (jobs and their
+  questions), Participants (candidates) and their video Responses, Message
+  Templates, Users, Webhooks, and Interview Templates. Authentication is by an
+  integration key (API key) from the Willo Integrations page, sent in the
+  Authorization header over HTTPS.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Video Interviewing
+- Recruitment
+- HR Tech
+- ATS
+- Screening
+- Async Video
+created: '2026-07-10'
+modified: '2026-07-10'
+specificationVersion: '0.19'
+apis:
+- aid: willo:willo-interviews-api
+  name: Willo Interviews API
+  tags:
+  - Interviews
+  - Jobs
+  - Questions
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://www.willo.video/api
+    type: Documentation
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Create, list, retrieve, update, and delete interviews - the named
+    sets of pre-defined questions a candidate answers (typically a "job" in an
+    ATS). Questions (prompt, answer type, duration, retakes, thinking time) are
+    embedded on each interview rather than exposed as a separate endpoint.
+- aid: willo:willo-participants-api
+  name: Willo Participants (Candidates) API
+  tags:
+  - Candidates
+  - Participants
+  - Responses
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Invite candidates ("participants") to an interview, list and retrieve
+    them with their completed video responses, move them between Kanban stages,
+    and read their identity-verification (IDV) details and media. Video responses
+    surface as a sub-resource on the participant, not as a separate endpoint.
+- aid: willo:willo-departments-api
+  name: Willo Departments API
+  tags:
+  - Departments
+  - Companies
+  - Branding
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Manage departments - sub-divisions of the account, shown as
+    "Companies" in the UI and used to represent brands, geographies, or business
+    units, each configurable with its own branding via API or UI.
+- aid: willo:willo-webhooks-api
+  name: Willo Webhooks API
+  tags:
+  - Webhooks
+  - Events
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Subscribe third-party endpoints to Willo event triggers - New
+    Response, Stage Change, New Comment, and New Score - and manage those
+    subscriptions. Willo recommends webhooks over polling for change tracking.
+- aid: willo:willo-message-templates-api
+  name: Willo Message Templates API
+  tags:
+  - Message Templates
+  - Email
+  - SMS
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Manage the invite, reminder, and success email/SMS templates that
+    Willo sends to participants, and configure which templates are used for a
+    given interview.
+- aid: willo:willo-users-api
+  name: Willo Users API
+  tags:
+  - Users
+  - Teams
+  - Permissions
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Invite, list, retrieve, update, and remove account users across the
+    Owner, Admin, and Standard roles that govern access to interviews and
+    participants.
+- aid: willo:willo-interview-templates-api
+  name: Willo Interview Templates API
+  tags:
+  - Interview Templates
+  - Categories
+  - Library
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Browse Willo's pre-built interview template library and its
+    categories, retrieve a template with its questions, and create a ready-to-use
+    interview directly from a template.
+- aid: willo:willo-child-organisations-api
+  name: Willo Child Organisations API
+  tags:
+  - Child Organisations
+  - Multi Org
+  - Reseller
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+  baseURL: https://api.willotalent.com/api/integrations/v2
+  properties:
+  - url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+    type: APIReference
+  - url: openapi/willo-openapi.yml
+    type: OpenAPI
+  - url: collections/willo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/willo.opencollection.json
+    type: OpenCollection
+  description: Create and list child organisations under a parent organisation -
+    for agencies, resellers, or multi-brand groups - each inheriting the parent's
+    properties but managed independently.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/willovideo
+- type: Website
+  url: https://www.willo.video/
+- type: Documentation
+  url: https://documenter.getpostman.com/view/7798010/VUjSEiSn
+- type: DeveloperPortal
+  url: https://developers.willo.video/
+- type: SignUp
+  url: https://app.willotalent.com/integrations
+- type: Support
+  url: https://support.willo.video/
+- type: StatusPage
+  url: https://status.willo.video/
+- type: ChangeLog
+  url: https://feedback.willo.video/changelog
+- type: Plans
+  url: plans/willo-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/willo-rate-limits.yml
+- type: FinOps
+  url: finops/willo-finops.yml
+- type: Blog
+  url: https://www.willo.video/blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
