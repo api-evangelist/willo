@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://trust.willo.video/
+url: https://trust.willo.video/
+certifications:
+- SOC 2
+- ISO 27001
+- PCI DSS
+- HIPAA
+- GDPR
+evidence:
+- source: https://trust.willo.video/
+  keywords:
+  - soc2
+  - iso 27001
+  - iso/iec 27001
+  - pci dss
+  - pci-dss
+  - hipaa
+  - trust center
+  - gdpr

@@ -197,6 +197,12 @@ apis:
     for agencies, resellers, or multi-brand groups - each inheriting the parent's
     properties but managed independently.
 common:
+- type: TrustCenter
+  url: security/willo-trust-center.yml
+- type: DomainSecurity
+  url: security/willo-domain-security.yml
+- type: Authentication
+  url: authentication/willo-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/willovideo
 - type: Website

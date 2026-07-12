@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/willo-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: The integration key ("API key") available on the Willo Integrations page at https://app.willotalent.com/integrations,
+    sent in the Authorization header. Each user has their own key carrying that user's permissions.
+  sources:
+  - openapi/willo-openapi.yml
