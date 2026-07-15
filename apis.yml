@@ -197,6 +197,8 @@ apis:
     for agencies, resellers, or multi-brand groups - each inheriting the parent's
     properties but managed independently.
 common:
+- type: AgenticAccess
+  url: agentic-access/willo-agentic-access.yml
 - type: TrustCenter
   url: security/willo-trust-center.yml
 - type: DomainSecurity
