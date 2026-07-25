@@ -1,0 +1,107 @@
+openapi: 3.0.3
+info:
+  title: Willo Integration API V2 Child Organisations API
+  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
+
+    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  version: '2.0'
+  contact:
+    name: Willo
+    url: https://www.willo.video/api
+  termsOfService: https://www.willo.video/terms
+servers:
+- url: https://api.willotalent.com/api/integrations/v2
+  description: Production
+- url: https://api.stage.willotalent.com/api/integrations/v2
+  description: Staging
+security:
+- apiKeyAuth: []
+tags:
+- name: Child Organisations
+  description: Organisations created under a parent organisation, inheriting its properties but managed independently.
+paths:
+  /children/:
+    get:
+      operationId: listChildOrganisations
+      tags:
+      - Child Organisations
+      summary: List Children
+      description: Lists organisations created under the parent organisation.
+      responses:
+        '200':
+          description: A list of child organisations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChildOrganisation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createChildOrganisation
+      tags:
+      - Child Organisations
+      summary: Create Child Organisation
+      description: Creates a new organisation under the parent organisation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChildOrganisationInput'
+      responses:
+        '201':
+          description: The created child organisation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChildOrganisation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    ChildOrganisationInput:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+    ChildOrganisation:
+      type: object
+      description: An organisation created under a parent organisation.
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: The integration key ("API key") available on the Willo Integrations page at https://app.willotalent.com/integrations, sent in the Authorization header. Each user has their own key carrying that user's permissions.

@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: Willo Integration API V2 Child Organisations Interview Templates API
+  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
+
+    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  version: '2.0'
+  contact:
+    name: Willo
+    url: https://www.willo.video/api
+  termsOfService: https://www.willo.video/terms
+servers:
+- url: https://api.willotalent.com/api/integrations/v2
+  description: Production
+- url: https://api.stage.willotalent.com/api/integrations/v2
+  description: Staging
+security:
+- apiKeyAuth: []
+tags:
+- name: Interview Templates
+  description: Pre-built interview templates and their categories, used to create interviews quickly.
+paths:
+  /categories/:
+    get:
+      operationId: listCategories
+      tags:
+      - Interview Templates
+      summary: List Categories
+      description: Lists the categories used to organise Willo's interview templates.
+      responses:
+        '200':
+          description: A list of categories.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /interview-templates/:
+    get:
+      operationId: listInterviewTemplates
+      tags:
+      - Interview Templates
+      summary: List Templates
+      description: Lists the available pre-built interview templates.
+      responses:
+        '200':
+          description: A list of interview templates.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InterviewTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /interview-templates/{key}/:
+    parameters:
+    - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getInterviewTemplate
+      tags:
+      - Interview Templates
+      summary: Get Template Details
+      description: Retrieves a single interview template, including its questions.
+      responses:
+        '200':
+          description: The requested interview template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterviewTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /interview-templates/{key}/interviews/:
+    parameters:
+    - $ref: '#/components/parameters/Key'
+    post:
+      operationId: createInterviewFromTemplate
+      tags:
+      - Interview Templates
+      summary: Create Interview from Template
+      description: Creates a new interview pre-populated from the given interview template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewInput'
+      responses:
+        '201':
+          description: The created interview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Question:
+      type: object
+      description: A single pre-defined question within an interview.
+      properties:
+        prompt:
+          type: string
+        type:
+          type: string
+          description: Answer type, for example video, audio, or text.
+        max_duration:
+          type: integer
+          description: Maximum answer duration in seconds.
+        max_retakes:
+          type: integer
+        thinking_time:
+          type: integer
+          description: Thinking time in seconds before recording starts.
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    Interview:
+      type: object
+      description: A named set of pre-defined questions; typically a "job" in an ATS.
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        department:
+          type: string
+          description: Key of the department the interview belongs to.
+        language:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+        created:
+          type: string
+          format: date-time
+    InterviewTemplate:
+      type: object
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    Category:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+    InterviewInput:
+      type: object
+      required:
+      - title
+      properties:
+        title:
+          type: string
+        department:
+          type: string
+        language:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: The integration key ("API key") available on the Willo Integrations page at https://app.willotalent.com/integrations, sent in the Authorization header. Each user has their own key carrying that user's permissions.

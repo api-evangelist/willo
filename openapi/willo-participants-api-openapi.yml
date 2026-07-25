@@ -1,0 +1,312 @@
+openapi: 3.0.3
+info:
+  title: Willo Integration API V2 Child Organisations Participants API
+  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
+
+    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  version: '2.0'
+  contact:
+    name: Willo
+    url: https://www.willo.video/api
+  termsOfService: https://www.willo.video/terms
+servers:
+- url: https://api.willotalent.com/api/integrations/v2
+  description: Production
+- url: https://api.stage.willotalent.com/api/integrations/v2
+  description: Staging
+security:
+- apiKeyAuth: []
+tags:
+- name: Participants
+  description: Candidates invited to an interview - no download, login, or authentication required.
+paths:
+  /participants/:
+    get:
+      operationId: listParticipants
+      tags:
+      - Participants
+      summary: List Participants
+      description: Lists participants (candidates) accessible to the API key.
+      responses:
+        '200':
+          description: A list of participants.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: inviteParticipant
+      tags:
+      - Participants
+      summary: Invite Participant
+      description: Invites a participant to an interview. An invite (and optional reminder) email/SMS is sent based on the interview's message templates.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantInput'
+      responses:
+        '201':
+          description: The invited participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /participants/{key}/:
+    parameters:
+    - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getParticipant
+      tags:
+      - Participants
+      summary: Participant Details
+      description: Retrieves a single participant, including their video responses when the interview has been completed.
+      responses:
+        '200':
+          description: The requested participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceParticipant
+      tags:
+      - Participants
+      summary: Update Participant (PUT)
+      description: Fully replaces a participant.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantInput'
+      responses:
+        '200':
+          description: The updated participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateParticipant
+      tags:
+      - Participants
+      summary: Update Participant (PATCH)
+      description: Partially updates a participant (for example, to change their stage).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantInput'
+      responses:
+        '200':
+          description: The updated participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteParticipant
+      tags:
+      - Participants
+      summary: Delete Participant
+      description: Deletes a participant.
+      responses:
+        '204':
+          description: The participant was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /participants/{key}/idv-info/:
+    parameters:
+    - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getParticipantIdvInfo
+      tags:
+      - Participants
+      summary: Participant Identity Verification Details
+      description: Retrieves the identity-verification (IDV) result and metadata for a participant.
+      responses:
+        '200':
+          description: The participant's IDV details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdvInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /participants/{key}/idv-media/:
+    parameters:
+    - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getParticipantIdvMedia
+      tags:
+      - Participants
+      summary: Participant Identity Verification Media
+      description: Retrieves the identity-verification media (for example, document and selfie images) for a participant.
+      responses:
+        '200':
+          description: The participant's IDV media references.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdvMedia'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ParticipantInput:
+      type: object
+      required:
+      - interview
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        interview:
+          type: string
+        stage:
+          type: string
+    IdvInfo:
+      type: object
+      description: Identity-verification result and metadata for a participant.
+      properties:
+        status:
+          type: string
+        country:
+          type: string
+        checked_at:
+          type: string
+          format: date-time
+    IdvMedia:
+      type: object
+      description: References to identity-verification media captured for a participant.
+      properties:
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+                format: uri
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    Response:
+      type: object
+      description: A participant's answer to a single interview question.
+      properties:
+        question:
+          type: string
+          description: Key or prompt of the answered question.
+        media_url:
+          type: string
+          format: uri
+          description: URL to the recorded video or audio answer.
+        transcript:
+          type: string
+        score:
+          type: number
+    Participant:
+      type: object
+      description: A candidate invited to an interview.
+      properties:
+        key:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          description: E.164-formatted phone number, used for SMS invites and reminders.
+        interview:
+          type: string
+          description: Key of the interview the participant was invited to.
+        stage:
+          type: string
+          description: The participant's current stage on the Willo Kanban board.
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Response'
+        created:
+          type: string
+          format: date-time
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: The integration key ("API key") available on the Willo Integrations page at https://app.willotalent.com/integrations, sent in the Authorization header. Each user has their own key carrying that user's permissions.

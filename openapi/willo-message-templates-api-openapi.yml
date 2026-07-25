@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: Willo Integration API V2 Child Organisations Message Templates API
+  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
+
+    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  version: '2.0'
+  contact:
+    name: Willo
+    url: https://www.willo.video/api
+  termsOfService: https://www.willo.video/terms
+servers:
+- url: https://api.willotalent.com/api/integrations/v2
+  description: Production
+- url: https://api.stage.willotalent.com/api/integrations/v2
+  description: Staging
+security:
+- apiKeyAuth: []
+tags:
+- name: Message Templates
+  description: Invite, reminder, and success email/SMS templates sent to participants.
+paths:
+  /message-templates/:
+    get:
+      operationId: listMessageTemplates
+      tags:
+      - Message Templates
+      summary: List Templates
+      description: Lists the invite, reminder, and success message templates in the account.
+      responses:
+        '200':
+          description: A list of message templates.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createMessageTemplate
+      tags:
+      - Message Templates
+      summary: Create Template
+      description: Creates a new message template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageTemplateInput'
+      responses:
+        '201':
+          description: The created message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /message-templates/{key}/:
+    parameters:
+    - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getMessageTemplate
+      tags:
+      - Message Templates
+      summary: Template Details
+      description: Retrieves a single message template.
+      responses:
+        '200':
+          description: The requested message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceMessageTemplate
+      tags:
+      - Message Templates
+      summary: Update Message Template (PUT)
+      description: Fully replaces a message template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageTemplateInput'
+      responses:
+        '200':
+          description: The updated message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateMessageTemplate
+      tags:
+      - Message Templates
+      summary: Update Message Template (PATCH)
+      description: Partially updates a message template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageTemplateInput'
+      responses:
+        '200':
+          description: The updated message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteMessageTemplate
+      tags:
+      - Message Templates
+      summary: Delete Message Template
+      description: Deletes a message template.
+      responses:
+        '204':
+          description: The message template was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    MessageTemplate:
+      type: object
+      description: An invite, reminder, or success email/SMS template.
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - invite
+          - reminder
+          - success
+        subject:
+          type: string
+        body:
+          type: string
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
+    MessageTemplateInput:
+      type: object
+      required:
+      - name
+      - type
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - invite
+          - reminder
+          - success
+        subject:
+          type: string
+        body:
+          type: string
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: The integration key ("API key") available on the Willo Integrations page at https://app.willotalent.com/integrations, sent in the Authorization header. Each user has their own key carrying that user's permissions.
