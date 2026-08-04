@@ -1,0 +1,30 @@
+{
+  "provider": "willo",
+  "sources": [
+    "willo-child-organisations-api-openapi.yml",
+    "willo-departments-api-openapi.yml",
+    "willo-interview-templates-api-openapi.yml",
+    "willo-interviews-api-openapi.yml",
+    "willo-message-templates-api-openapi.yml",
+    "willo-participants-api-openapi.yml",
+    "willo-reference-api-openapi.yml",
+    "willo-users-api-openapi.yml",
+    "willo-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "willo-child-organisations-api-openapi.yml",
+    "willo-departments-api-openapi.yml",
+    "willo-interview-templates-api-openapi.yml",
+    "willo-interviews-api-openapi.yml",
+    "willo-message-templates-api-openapi.yml",
+    "willo-participants-api-openapi.yml",
+    "willo-reference-api-openapi.yml",
+    "willo-users-api-openapi.yml",
+    "willo-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

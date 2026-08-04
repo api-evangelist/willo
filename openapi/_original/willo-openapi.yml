@@ -1,0 +1,1265 @@
+openapi: 3.0.3
+info:
+  title: Willo Integration API V2
+  description: >-
+    The Willo Integration API V2 exposes the actions that can be carried out in
+    the Willo asynchronous ("one-way") video interviewing platform as a public
+    REST API, so you can add video interviewing to a job board, ATS, CRM, or
+    staffing platform. Resources include Departments (called "Companies" in the
+    UI), Interviews (the set of pre-defined questions a participant answers -
+    typically a "job" in an ATS), Participants (candidates - no login or app
+    required), their video Responses and identity-verification media, Message
+    Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview
+    Templates, and Child Organisations. Authentication is by API key ("integration
+    key") passed in the Authorization header; each user has their own key from the
+    Willo Integrations page. All requests must be made over HTTPS.
+
+    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers,
+    and the two host environments below are confirmed from Willo's published
+    Postman API reference. Request and response body schemas are modeled from the
+    documented resource glossary and are illustrative; confirm exact field names
+    and shapes against the live Willo reference before production use.
+  version: '2.0'
+  contact:
+    name: Willo
+    url: https://www.willo.video/api
+  termsOfService: https://www.willo.video/terms
+servers:
+  - url: https://api.willotalent.com/api/integrations/v2
+    description: Production
+  - url: https://api.stage.willotalent.com/api/integrations/v2
+    description: Staging
+security:
+  - apiKeyAuth: []
+tags:
+  - name: Departments
+    description: Sub-divisions of the account (shown as "Companies" in the UI), each with its own branding.
+  - name: Interviews
+    description: A named set of pre-defined questions a participant answers; typically a "job" in an ATS.
+  - name: Participants
+    description: Candidates invited to an interview - no download, login, or authentication required.
+  - name: Message Templates
+    description: Invite, reminder, and success email/SMS templates sent to participants.
+  - name: Users
+    description: Authenticated team members (Owner, Admin, Standard) with access to interviews and participants.
+  - name: Webhooks
+    description: Notifications posted to a third-party endpoint on new response, stage change, new comment, or new score.
+  - name: Interview Templates
+    description: Pre-built interview templates and their categories, used to create interviews quickly.
+  - name: Child Organisations
+    description: Organisations created under a parent organisation, inheriting its properties but managed independently.
+  - name: Reference
+    description: Read-only reference data - languages and IDV countries of employment.
+paths:
+  /departments/:
+    get:
+      operationId: listDepartments
+      tags: [Departments]
+      summary: List Departments
+      description: Lists the departments (Companies) in the account the API key can access.
+      responses:
+        '200':
+          description: A list of departments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Department'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDepartment
+      tags: [Departments]
+      summary: Create Department
+      description: Creates a new department (Company), optionally with its own branding.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentInput'
+      responses:
+        '201':
+          description: The created department.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /departments/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getDepartment
+      tags: [Departments]
+      summary: Department Details
+      description: Retrieves a single department by its key.
+      responses:
+        '200':
+          description: The requested department.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceDepartment
+      tags: [Departments]
+      summary: Update Department (PUT)
+      description: Fully replaces a department.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentInput'
+      responses:
+        '200':
+          description: The updated department.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateDepartment
+      tags: [Departments]
+      summary: Update Department (PATCH)
+      description: Partially updates a department.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepartmentInput'
+      responses:
+        '200':
+          description: The updated department.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDepartment
+      tags: [Departments]
+      summary: Delete Department
+      description: Deletes a department.
+      responses:
+        '204':
+          description: The department was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /interviews/:
+    get:
+      operationId: listInterviews
+      tags: [Interviews]
+      summary: List Interviews
+      description: Lists interviews (jobs) accessible to the API key.
+      responses:
+        '200':
+          description: A list of interviews.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Interview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createInterview
+      tags: [Interviews]
+      summary: Create Interview
+      description: Creates an interview with a list of pre-defined questions.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewInput'
+      responses:
+        '201':
+          description: The created interview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /interviews/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getInterview
+      tags: [Interviews]
+      summary: Interview Details
+      description: Retrieves a single interview, including its questions.
+      responses:
+        '200':
+          description: The requested interview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceInterview
+      tags: [Interviews]
+      summary: Update Interview (PUT)
+      description: Fully replaces an interview.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewInput'
+      responses:
+        '200':
+          description: The updated interview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateInterview
+      tags: [Interviews]
+      summary: Update Interview (PATCH)
+      description: Partially updates an interview.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewInput'
+      responses:
+        '200':
+          description: The updated interview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteInterview
+      tags: [Interviews]
+      summary: Delete Interview
+      description: Deletes an interview.
+      responses:
+        '204':
+          description: The interview was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /participants/:
+    get:
+      operationId: listParticipants
+      tags: [Participants]
+      summary: List Participants
+      description: Lists participants (candidates) accessible to the API key.
+      responses:
+        '200':
+          description: A list of participants.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: inviteParticipant
+      tags: [Participants]
+      summary: Invite Participant
+      description: >-
+        Invites a participant to an interview. An invite (and optional reminder)
+        email/SMS is sent based on the interview's message templates.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantInput'
+      responses:
+        '201':
+          description: The invited participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /participants/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getParticipant
+      tags: [Participants]
+      summary: Participant Details
+      description: >-
+        Retrieves a single participant, including their video responses when the
+        interview has been completed.
+      responses:
+        '200':
+          description: The requested participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceParticipant
+      tags: [Participants]
+      summary: Update Participant (PUT)
+      description: Fully replaces a participant.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantInput'
+      responses:
+        '200':
+          description: The updated participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateParticipant
+      tags: [Participants]
+      summary: Update Participant (PATCH)
+      description: Partially updates a participant (for example, to change their stage).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipantInput'
+      responses:
+        '200':
+          description: The updated participant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteParticipant
+      tags: [Participants]
+      summary: Delete Participant
+      description: Deletes a participant.
+      responses:
+        '204':
+          description: The participant was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /participants/{key}/idv-info/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getParticipantIdvInfo
+      tags: [Participants]
+      summary: Participant Identity Verification Details
+      description: Retrieves the identity-verification (IDV) result and metadata for a participant.
+      responses:
+        '200':
+          description: The participant's IDV details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdvInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /participants/{key}/idv-media/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getParticipantIdvMedia
+      tags: [Participants]
+      summary: Participant Identity Verification Media
+      description: Retrieves the identity-verification media (for example, document and selfie images) for a participant.
+      responses:
+        '200':
+          description: The participant's IDV media references.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdvMedia'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /message-templates/:
+    get:
+      operationId: listMessageTemplates
+      tags: [Message Templates]
+      summary: List Templates
+      description: Lists the invite, reminder, and success message templates in the account.
+      responses:
+        '200':
+          description: A list of message templates.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createMessageTemplate
+      tags: [Message Templates]
+      summary: Create Template
+      description: Creates a new message template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageTemplateInput'
+      responses:
+        '201':
+          description: The created message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /message-templates/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getMessageTemplate
+      tags: [Message Templates]
+      summary: Template Details
+      description: Retrieves a single message template.
+      responses:
+        '200':
+          description: The requested message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceMessageTemplate
+      tags: [Message Templates]
+      summary: Update Message Template (PUT)
+      description: Fully replaces a message template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageTemplateInput'
+      responses:
+        '200':
+          description: The updated message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateMessageTemplate
+      tags: [Message Templates]
+      summary: Update Message Template (PATCH)
+      description: Partially updates a message template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageTemplateInput'
+      responses:
+        '200':
+          description: The updated message template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteMessageTemplate
+      tags: [Message Templates]
+      summary: Delete Message Template
+      description: Deletes a message template.
+      responses:
+        '204':
+          description: The message template was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /users/:
+    get:
+      operationId: listUsers
+      tags: [Users]
+      summary: List Users
+      description: Lists the users (Owner, Admin, Standard) in the account.
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: inviteUser
+      tags: [Users]
+      summary: Invite User
+      description: Invites a new user to the account with a given role.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: The invited user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /users/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getUser
+      tags: [Users]
+      summary: User Details
+      description: Retrieves a single user.
+      responses:
+        '200':
+          description: The requested user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateUser
+      tags: [Users]
+      summary: Update User (PATCH)
+      description: Partially updates a user (for example, their role or permissions).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: The updated user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteUser
+      tags: [Users]
+      summary: Delete User
+      description: Removes a user from the account.
+      responses:
+        '204':
+          description: The user was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /webhooks/:
+    get:
+      operationId: listWebhooks
+      tags: [Webhooks]
+      summary: List Webhooks
+      description: Lists the configured webhook subscriptions.
+      responses:
+        '200':
+          description: A list of webhooks.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createWebhook
+      tags: [Webhooks]
+      summary: Create Webhook
+      description: >-
+        Subscribes a third-party endpoint to a Willo event trigger - New Response,
+        Stage Change, New Comment, or New Score.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInput'
+      responses:
+        '201':
+          description: The created webhook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /webhooks/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    put:
+      operationId: replaceWebhook
+      tags: [Webhooks]
+      summary: Update Webhook (PUT)
+      description: Fully replaces a webhook subscription.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInput'
+      responses:
+        '200':
+          description: The updated webhook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateWebhook
+      tags: [Webhooks]
+      summary: Update Webhook (PATCH)
+      description: Partially updates a webhook subscription.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInput'
+      responses:
+        '200':
+          description: The updated webhook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteWebhook
+      tags: [Webhooks]
+      summary: Delete Webhook
+      description: Deletes a webhook subscription.
+      responses:
+        '204':
+          description: The webhook was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /categories/:
+    get:
+      operationId: listCategories
+      tags: [Interview Templates]
+      summary: List Categories
+      description: Lists the categories used to organise Willo's interview templates.
+      responses:
+        '200':
+          description: A list of categories.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /interview-templates/:
+    get:
+      operationId: listInterviewTemplates
+      tags: [Interview Templates]
+      summary: List Templates
+      description: Lists the available pre-built interview templates.
+      responses:
+        '200':
+          description: A list of interview templates.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InterviewTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /interview-templates/{key}/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    get:
+      operationId: getInterviewTemplate
+      tags: [Interview Templates]
+      summary: Get Template Details
+      description: Retrieves a single interview template, including its questions.
+      responses:
+        '200':
+          description: The requested interview template.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterviewTemplate'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /interview-templates/{key}/interviews/:
+    parameters:
+      - $ref: '#/components/parameters/Key'
+    post:
+      operationId: createInterviewFromTemplate
+      tags: [Interview Templates]
+      summary: Create Interview from Template
+      description: Creates a new interview pre-populated from the given interview template.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewInput'
+      responses:
+        '201':
+          description: The created interview.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interview'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /children/:
+    get:
+      operationId: listChildOrganisations
+      tags: [Child Organisations]
+      summary: List Children
+      description: Lists organisations created under the parent organisation.
+      responses:
+        '200':
+          description: A list of child organisations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChildOrganisation'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createChildOrganisation
+      tags: [Child Organisations]
+      summary: Create Child Organisation
+      description: Creates a new organisation under the parent organisation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChildOrganisationInput'
+      responses:
+        '201':
+          description: The created child organisation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChildOrganisation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /languages/:
+    get:
+      operationId: listLanguages
+      tags: [Reference]
+      summary: List Languages
+      description: Lists the languages supported for interviews and participant communications.
+      responses:
+        '200':
+          description: A list of languages.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Language'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /idv-counties/:
+    get:
+      operationId: listIdvCountries
+      tags: [Reference]
+      summary: List Countries
+      description: Lists the countries of employment supported for identity verification (IDV).
+      responses:
+        '200':
+          description: A list of IDV countries of employment.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Country'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        The integration key ("API key") available on the Willo Integrations page
+        at https://app.willotalent.com/integrations, sent in the Authorization
+        header. Each user has their own key carrying that user's permissions.
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Department:
+      type: object
+      description: A sub-division of the account, shown as a "Company" in the UI.
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        is_global:
+          type: boolean
+          description: When true, all users have access to this department by default.
+        branding:
+          type: object
+          description: Optional branding overrides for this department.
+    DepartmentInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        is_global:
+          type: boolean
+        branding:
+          type: object
+    Interview:
+      type: object
+      description: A named set of pre-defined questions; typically a "job" in an ATS.
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        department:
+          type: string
+          description: Key of the department the interview belongs to.
+        language:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+        created:
+          type: string
+          format: date-time
+    InterviewInput:
+      type: object
+      required: [title]
+      properties:
+        title:
+          type: string
+        department:
+          type: string
+        language:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    Question:
+      type: object
+      description: A single pre-defined question within an interview.
+      properties:
+        prompt:
+          type: string
+        type:
+          type: string
+          description: Answer type, for example video, audio, or text.
+        max_duration:
+          type: integer
+          description: Maximum answer duration in seconds.
+        max_retakes:
+          type: integer
+        thinking_time:
+          type: integer
+          description: Thinking time in seconds before recording starts.
+    Participant:
+      type: object
+      description: A candidate invited to an interview.
+      properties:
+        key:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          description: E.164-formatted phone number, used for SMS invites and reminders.
+        interview:
+          type: string
+          description: Key of the interview the participant was invited to.
+        stage:
+          type: string
+          description: The participant's current stage on the Willo Kanban board.
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Response'
+        created:
+          type: string
+          format: date-time
+    ParticipantInput:
+      type: object
+      required: [interview]
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+        interview:
+          type: string
+        stage:
+          type: string
+    Response:
+      type: object
+      description: A participant's answer to a single interview question.
+      properties:
+        question:
+          type: string
+          description: Key or prompt of the answered question.
+        media_url:
+          type: string
+          format: uri
+          description: URL to the recorded video or audio answer.
+        transcript:
+          type: string
+        score:
+          type: number
+    IdvInfo:
+      type: object
+      description: Identity-verification result and metadata for a participant.
+      properties:
+        status:
+          type: string
+        country:
+          type: string
+        checked_at:
+          type: string
+          format: date-time
+    IdvMedia:
+      type: object
+      description: References to identity-verification media captured for a participant.
+      properties:
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+                format: uri
+    MessageTemplate:
+      type: object
+      description: An invite, reminder, or success email/SMS template.
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum: [invite, reminder, success]
+        subject:
+          type: string
+        body:
+          type: string
+    MessageTemplateInput:
+      type: object
+      required: [name, type]
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum: [invite, reminder, success]
+        subject:
+          type: string
+        body:
+          type: string
+    User:
+      type: object
+      description: An authenticated team member.
+      properties:
+        key:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [owner, admin, standard]
+    UserInput:
+      type: object
+      required: [email, role]
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [owner, admin, standard]
+    Webhook:
+      type: object
+      description: A subscription that posts an event payload to a third-party endpoint.
+      properties:
+        key:
+          type: string
+        target_url:
+          type: string
+          format: uri
+        trigger:
+          type: string
+          enum: [new_response, stage_change, new_comment, new_score]
+        is_active:
+          type: boolean
+    WebhookInput:
+      type: object
+      required: [target_url, trigger]
+      properties:
+        target_url:
+          type: string
+          format: uri
+        trigger:
+          type: string
+          enum: [new_response, stage_change, new_comment, new_score]
+        is_active:
+          type: boolean
+    Category:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+    InterviewTemplate:
+      type: object
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    ChildOrganisation:
+      type: object
+      description: An organisation created under a parent organisation.
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+    ChildOrganisationInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+    Language:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    Country:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
