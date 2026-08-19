@@ -1,0 +1,1264 @@
+{
+  "item": [
+    {
+      "id": "324c6ae0-b8c9-419d-887d-f7d209e4e49c",
+      "name": "Interviews",
+      "description": {
+        "content": "A named set of pre-defined questions a participant answers; typically a \"job\" in an ATS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bd68b488-3fc5-484c-9ec8-1dbcd2977ee5",
+          "name": "List Interviews",
+          "request": {
+            "name": "List Interviews",
+            "description": {
+              "content": "Lists interviews (jobs) accessible to the API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interviews",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b4c03bfe-b371-496f-ad32-37b7c8ff3d02",
+              "name": "A list of interviews.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"key\": \"string\",\n      \"title\": \"string\",\n      \"department\": \"string\",\n      \"language\": \"string\",\n      \"questions\": [\n        {\n          \"prompt\": \"string\",\n          \"type\": \"string\",\n          \"max_duration\": 341,\n          \"max_retakes\": 3933,\n          \"thinking_time\": 3067\n        },\n        {\n          \"prompt\": \"string\",\n          \"type\": \"string\",\n          \"max_duration\": 7932,\n          \"max_retakes\": 4400,\n          \"thinking_time\": 634\n        }\n      ],\n      \"created\": \"2003-05-06T12:55:15.002Z\"\n    },\n    {\n      \"key\": \"string\",\n      \"title\": \"string\",\n      \"department\": \"string\",\n      \"language\": \"string\",\n      \"questions\": [\n        {\n          \"prompt\": \"string\",\n          \"type\": \"string\",\n          \"max_duration\": 2956,\n          \"max_retakes\": 8055,\n          \"thinking_time\": 1125\n        },\n        {\n          \"prompt\": \"string\",\n          \"type\": \"string\",\n          \"max_duration\": 3582,\n          \"max_retakes\": 1118,\n          \"thinking_time\": 2641\n        }\n      ],\n      \"created\": \"1961-03-19T05:59:54.393Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa34dbcc-ca51-42ec-a3e3-76707a3c68e8",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71c43c13-362b-42ee-b0e4-63c9ee66565e",
+          "name": "Create Interview",
+          "request": {
+            "name": "Create Interview",
+            "description": {
+              "content": "Creates an interview with a list of pre-defined questions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interviews",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ab7751d-c881-43f3-8922-f18fe8f1db2f",
+              "name": "The created interview.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"title\": \"string\",\n  \"department\": \"string\",\n  \"language\": \"string\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ],\n  \"created\": \"1976-07-13T07:49:36.535Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31338057-5e6d-4d46-84aa-b2111cb9912b",
+              "name": "The request was unacceptable, often due to a missing required parameter.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ffe945e-7d72-416b-abe9-81c5a57233a3",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06d6ae4e-6db8-4e54-a1ef-17679ab7dead",
+          "name": "Interview Details",
+          "request": {
+            "name": "Interview Details",
+            "description": {
+              "content": "Retrieves a single interview, including its questions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interviews",
+                ":key",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The unique key of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cb7079f6-b3cd-41b4-95ff-049ad7b9fcf3",
+              "name": "The requested interview.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"title\": \"string\",\n  \"department\": \"string\",\n  \"language\": \"string\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ],\n  \"created\": \"1976-07-13T07:49:36.535Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0af7d6a6-9f96-4209-9685-ef4d05112829",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f76912c-4552-4b9d-8b78-018c74ffccff",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8017c460-2841-476f-b390-06163f6692f5",
+          "name": "Update Interview (PUT)",
+          "request": {
+            "name": "Update Interview (PUT)",
+            "description": {
+              "content": "Fully replaces an interview.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interviews",
+                ":key",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The unique key of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff20499c-b045-4562-84ec-4013eddc039c",
+              "name": "The updated interview.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"title\": \"string\",\n  \"department\": \"string\",\n  \"language\": \"string\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ],\n  \"created\": \"1976-07-13T07:49:36.535Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8977fcb3-0d6d-4a22-8307-ce66a83a4052",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c721c70-bfe2-4dd5-9dca-007fe0db9be2",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "410ec145-1b93-439a-9981-6ffb374878d1",
+          "name": "Update Interview (PATCH)",
+          "request": {
+            "name": "Update Interview (PATCH)",
+            "description": {
+              "content": "Partially updates an interview.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interviews",
+                ":key",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The unique key of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dd2f699f-934f-4f7f-8359-a86a334e547f",
+              "name": "The updated interview.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key\": \"string\",\n  \"title\": \"string\",\n  \"department\": \"string\",\n  \"language\": \"string\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ],\n  \"created\": \"1976-07-13T07:49:36.535Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0144ed04-9394-4124-9bef-207daf42e7cb",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3de04288-6442-4a7c-bfbf-ca4acb091dc0",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"<string>\",\n  \"department\": \"<string>\",\n  \"language\": \"<string>\",\n  \"questions\": [\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    },\n    {\n      \"prompt\": \"<string>\",\n      \"type\": \"<string>\",\n      \"max_duration\": \"<integer>\",\n      \"max_retakes\": \"<integer>\",\n      \"thinking_time\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "333c3a36-b983-4d90-a5da-3cdf7597daf4",
+          "name": "Delete Interview",
+          "request": {
+            "name": "Delete Interview",
+            "description": {
+              "content": "Deletes an interview.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "interviews",
+                ":key",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "key",
+                  "description": "(Required) The unique key of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d38c2a00-f579-461d-bafa-ae28577f57a6",
+              "name": "The interview was deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "82a87ce7-7ed3-4b7a-b64d-2721cbd04279",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b269f52-4f7a-4a46-a2c7-ae6e0ebb297d",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "interviews",
+                    ":key",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "key",
+                      "description": "(Required) The unique key of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.willotalent.com/api/integrations/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3871823-6302-4e52-85e6-2f2401dab6e0",
+    "name": "Willo Integration API V2 Child Organisations Interviews API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous (\"one-way\") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called \"Companies\" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a \"job\" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key (\"integration key\") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.\nEndpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo's published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.\n\nContact Support:\n Name: Willo",
+      "type": "text/plain"
+    }
+  }
+}

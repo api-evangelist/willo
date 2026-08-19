@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2 Child Organisations Reference API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Languages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/languages/"
+          },
+          "docs": "Lists the languages supported for interviews and participant communications."
+        },
+        {
+          "info": {
+            "name": "List Countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/idv-counties/"
+          },
+          "docs": "Lists the countries of employment supported for identity verification (IDV)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

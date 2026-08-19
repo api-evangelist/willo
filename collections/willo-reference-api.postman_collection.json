@@ -1,0 +1,297 @@
+{
+  "item": [
+    {
+      "id": "99f8bbaa-7d72-4863-bca4-db83a22101d3",
+      "name": "Reference",
+      "description": {
+        "content": "Read-only reference data - languages and IDV countries of employment.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1cc7ce5c-e9ad-4833-8300-3096dfe349e6",
+          "name": "List Languages",
+          "request": {
+            "name": "List Languages",
+            "description": {
+              "content": "Lists the languages supported for interviews and participant communications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "languages",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26278de4-ec16-47a4-95a5-142d46348233",
+              "name": "A list of languages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "languages",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"code\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da64f287-90f2-400e-82bd-b2ed102a0162",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "languages",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8504bb9-cf3f-421e-8cf1-764c658f7714",
+          "name": "List Countries",
+          "request": {
+            "name": "List Countries",
+            "description": {
+              "content": "Lists the countries of employment supported for identity verification (IDV).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "idv-counties",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b721397a-5421-4a0b-bb55-596c3161d703",
+              "name": "A list of IDV countries of employment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idv-counties",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"code\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61872237-fc57-4087-8e48-6d39e1be3072",
+              "name": "No valid API key was provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "idv-counties",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.willotalent.com/api/integrations/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "433b6d5a-6145-4ff8-a585-319353dc2f55",
+    "name": "Willo Integration API V2 Child Organisations Reference API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous (\"one-way\") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called \"Companies\" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a \"job\" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key (\"integration key\") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.\nEndpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo's published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.\n\nContact Support:\n Name: Willo",
+      "type": "text/plain"
+    }
+  }
+}

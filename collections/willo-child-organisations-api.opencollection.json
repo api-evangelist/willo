@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2 Child Organisations API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Child Organisations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/children/"
+          },
+          "docs": "Lists organisations created under the parent organisation."
+        },
+        {
+          "info": {
+            "name": "Create Child Organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.willotalent.com/api/integrations/v2/children/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organisation under the parent organisation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

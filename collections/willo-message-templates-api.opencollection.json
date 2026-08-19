@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2 Child Organisations Message Templates API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Message Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/message-templates/"
+          },
+          "docs": "Lists the invite, reminder, and success message templates in the account."
+        },
+        {
+          "info": {
+            "name": "Create Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.willotalent.com/api/integrations/v2/message-templates/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new message template."
+        },
+        {
+          "info": {
+            "name": "Template Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieves a single message template."
+        },
+        {
+          "info": {
+            "name": "Update Message Template (PUT)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fully replaces a message template."
+        },
+        {
+          "info": {
+            "name": "Update Message Template (PATCH)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates a message template."
+        },
+        {
+          "info": {
+            "name": "Delete Message Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.willotalent.com/api/integrations/v2/message-templates/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Deletes a message template."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,113 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2 Child Organisations Users API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/users/"
+          },
+          "docs": "Lists the users (Owner, Admin, Standard) in the account."
+        },
+        {
+          "info": {
+            "name": "Invite User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.willotalent.com/api/integrations/v2/users/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invites a new user to the account with a given role."
+        },
+        {
+          "info": {
+            "name": "User Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/users/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieves a single user."
+        },
+        {
+          "info": {
+            "name": "Update User (PATCH)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.willotalent.com/api/integrations/v2/users/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates a user (for example, their role or permissions)."
+        },
+        {
+          "info": {
+            "name": "Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.willotalent.com/api/integrations/v2/users/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Removes a user from the account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

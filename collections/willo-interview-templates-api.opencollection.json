@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2 Child Organisations Interview Templates API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Interview Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/categories/"
+          },
+          "docs": "Lists the categories used to organise Willo's interview templates."
+        },
+        {
+          "info": {
+            "name": "List Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/interview-templates/"
+          },
+          "docs": "Lists the available pre-built interview templates."
+        },
+        {
+          "info": {
+            "name": "Get Template Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/interview-templates/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieves a single interview template, including its questions."
+        },
+        {
+          "info": {
+            "name": "Create Interview from Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.willotalent.com/api/integrations/v2/interview-templates/:key/interviews/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new interview pre-populated from the given interview template."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

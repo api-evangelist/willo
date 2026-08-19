@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Willo Integration API V2 Child Organisations Participants API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Participants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Participants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/"
+          },
+          "docs": "Lists participants (candidates) accessible to the API key."
+        },
+        {
+          "info": {
+            "name": "Invite Participant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invites a participant to an interview. An invite (and optional reminder) email/SMS is sent based on the interview's message templates."
+        },
+        {
+          "info": {
+            "name": "Participant Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieves a single participant, including their video responses when the interview has been completed."
+        },
+        {
+          "info": {
+            "name": "Update Participant (PUT)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fully replaces a participant."
+        },
+        {
+          "info": {
+            "name": "Update Participant (PATCH)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates a participant (for example, to change their stage)."
+        },
+        {
+          "info": {
+            "name": "Delete Participant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Deletes a participant."
+        },
+        {
+          "info": {
+            "name": "Participant Identity Verification Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/idv-info/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieves the identity-verification (IDV) result and metadata for a participant."
+        },
+        {
+          "info": {
+            "name": "Participant Identity Verification Media",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.willotalent.com/api/integrations/v2/participants/:key/idv-media/",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "The unique key of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieves the identity-verification media (for example, document and selfie images) for a participant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
