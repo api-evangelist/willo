@@ -172,6 +172,8 @@ apis:
   humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
   baseURL: https://api.willotalent.com/api/integrations/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -192,6 +194,8 @@ apis:
   humanURL: https://documenter.getpostman.com/view/7798010/VUjSEiSn
   baseURL: https://api.willotalent.com/api/integrations/v2
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
