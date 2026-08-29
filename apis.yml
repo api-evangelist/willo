@@ -12,6 +12,18 @@ description: Willo is an asynchronous ("one-way") video interviewing and screeni
   Templates, Users, Webhooks, and Interview Templates. Authentication is by an
   integration key (API key) from the Willo Integrations page, sent in the
   Authorization header over HTTPS.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
