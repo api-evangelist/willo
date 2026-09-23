@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Willo Integration API V2 Child Organisations Interviews API
-  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
-
-    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  title: Willo Integration API V2 Interviews API
+  description: The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform.
   version: '2.0'
   contact:
     name: Willo
@@ -164,28 +162,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Question:
-      type: object
-      description: A single pre-defined question within an interview.
-      properties:
-        prompt:
-          type: string
-        type:
-          type: string
-          description: Answer type, for example video, audio, or text.
-        max_duration:
-          type: integer
-          description: Maximum answer duration in seconds.
-        max_retakes:
-          type: integer
-        thinking_time:
-          type: integer
-          description: Thinking time in seconds before recording starts.
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
     Interview:
       type: object
       description: A named set of pre-defined questions; typically a "job" in an ATS.
@@ -221,6 +197,28 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Question'
+    Question:
+      type: object
+      description: A single pre-defined question within an interview.
+      properties:
+        prompt:
+          type: string
+        type:
+          type: string
+          description: Answer type, for example video, audio, or text.
+        max_duration:
+          type: integer
+          description: Maximum answer duration in seconds.
+        max_retakes:
+          type: integer
+        thinking_time:
+          type: integer
+          description: Thinking time in seconds before recording starts.
+    Error:
+      type: object
+      properties:
+        detail:
+          type: string
   parameters:
     Key:
       name: key

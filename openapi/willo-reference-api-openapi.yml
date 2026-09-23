@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Willo Integration API V2 Child Organisations Reference API
-  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
-
-    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  title: Willo Integration API V2 Reference API
+  description: The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform.
   version: '2.0'
   contact:
     name: Willo
@@ -63,6 +61,13 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -83,13 +88,6 @@ components:
           type: string
         name:
           type: string
-  responses:
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

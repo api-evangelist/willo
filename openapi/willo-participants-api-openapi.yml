@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Willo Integration API V2 Child Organisations Participants API
-  description: 'The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform. Resources include Departments (called "Companies" in the UI), Interviews (the set of pre-defined questions a participant answers - typically a "job" in an ATS), Participants (candidates - no login or app required), their video Responses and identity-verification media, Message Templates (invite/reminder/success email and SMS), Users, Webhooks, Interview Templates, and Child Organisations. Authentication is by API key ("integration key") passed in the Authorization header; each user has their own key from the Willo Integrations page. All requests must be made over HTTPS.
-
-    Endpoint paths, HTTP methods, authentication, status codes, webhook triggers, and the two host environments below are confirmed from Willo''s published Postman API reference. Request and response body schemas are modeled from the documented resource glossary and are illustrative; confirm exact field names and shapes against the live Willo reference before production use.'
+  title: Willo Integration API V2 Participants API
+  description: The Willo Integration API V2 exposes the actions that can be carried out in the Willo asynchronous ("one-way") video interviewing platform as a public REST API, so you can add video interviewing to a job board, ATS, CRM, or staffing platform.
   version: '2.0'
   contact:
     name: Willo
@@ -185,6 +183,46 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Participant:
+      type: object
+      description: A candidate invited to an interview.
+      properties:
+        key:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          description: E.164-formatted phone number, used for SMS invites and reminders.
+        interview:
+          type: string
+          description: Key of the interview the participant was invited to.
+        stage:
+          type: string
+          description: The participant's current stage on the Willo Kanban board.
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Response'
+        created:
+          type: string
+          format: date-time
+    IdvInfo:
+      type: object
+      description: Identity-verification result and metadata for a participant.
+      properties:
+        status:
+          type: string
+        country:
+          type: string
+        checked_at:
+          type: string
+          format: date-time
     ParticipantInput:
       type: object
       required:
@@ -203,17 +241,6 @@ components:
           type: string
         stage:
           type: string
-    IdvInfo:
-      type: object
-      description: Identity-verification result and metadata for a participant.
-      properties:
-        status:
-          type: string
-        country:
-          type: string
-        checked_at:
-          type: string
-          format: date-time
     IdvMedia:
       type: object
       description: References to identity-verification media captured for a participant.
@@ -248,35 +275,6 @@ components:
           type: string
         score:
           type: number
-    Participant:
-      type: object
-      description: A candidate invited to an interview.
-      properties:
-        key:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: string
-          description: E.164-formatted phone number, used for SMS invites and reminders.
-        interview:
-          type: string
-          description: Key of the interview the participant was invited to.
-        stage:
-          type: string
-          description: The participant's current stage on the Willo Kanban board.
-        responses:
-          type: array
-          items:
-            $ref: '#/components/schemas/Response'
-        created:
-          type: string
-          format: date-time
   responses:
     NotFound:
       description: The requested resource does not exist.
