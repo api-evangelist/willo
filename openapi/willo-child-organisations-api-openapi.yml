@@ -64,6 +64,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    ChildOrganisationInput:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
     ChildOrganisation:
       type: object
       description: An organisation created under a parent organisation.
@@ -77,22 +84,15 @@ components:
       properties:
         detail:
           type: string
-    ChildOrganisationInput:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
   responses:
-    Unauthorized:
-      description: No valid API key was provided.
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
+    Unauthorized:
+      description: No valid API key was provided.
       content:
         application/json:
           schema:

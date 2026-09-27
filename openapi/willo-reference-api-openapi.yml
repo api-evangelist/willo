@@ -61,14 +61,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    Language:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
     Error:
       type: object
       properties:
@@ -81,13 +81,13 @@ components:
           type: string
         name:
           type: string
-    Language:
-      type: object
-      properties:
-        code:
-          type: string
-        name:
-          type: string
+  responses:
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

@@ -110,19 +110,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    InterviewTemplate:
-      type: object
-      properties:
-        key:
-          type: string
-        title:
-          type: string
-        category:
-          type: string
-        questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Question'
     Interview:
       type: object
       description: A named set of pre-defined questions; typically a "job" in an ATS.
@@ -165,6 +152,19 @@ components:
           type: string
         name:
           type: string
+    InterviewTemplate:
+      type: object
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
     Question:
       type: object
       description: A single pre-defined question within an interview.
@@ -188,6 +188,12 @@ components:
         detail:
           type: string
   responses:
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource does not exist.
       content:
@@ -196,12 +202,6 @@ components:
             $ref: '#/components/schemas/Error'
     Unauthorized:
       description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
       content:
         application/json:
           schema:
