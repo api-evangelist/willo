@@ -130,21 +130,6 @@ components:
         created:
           type: string
           format: date-time
-    InterviewInput:
-      type: object
-      required:
-      - title
-      properties:
-        title:
-          type: string
-        department:
-          type: string
-        language:
-          type: string
-        questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Question'
     Category:
       type: object
       properties:
@@ -152,19 +137,6 @@ components:
           type: string
         name:
           type: string
-    InterviewTemplate:
-      type: object
-      properties:
-        key:
-          type: string
-        title:
-          type: string
-        category:
-          type: string
-        questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Question'
     Question:
       type: object
       description: A single pre-defined question within an interview.
@@ -182,20 +154,56 @@ components:
         thinking_time:
           type: integer
           description: Thinking time in seconds before recording starts.
+    InterviewInput:
+      type: object
+      required:
+      - title
+      properties:
+        title:
+          type: string
+        department:
+          type: string
+        language:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    InterviewTemplate:
+      type: object
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
     Error:
       type: object
       properties:
         detail:
           type: string
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
   responses:
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
+    NotFound:
+      description: The requested resource does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource does not exist.
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
       content:
         application/json:
           schema:
@@ -206,14 +214,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    Key:
-      name: key
-      in: path
-      required: true
-      description: The unique key of the resource.
-      schema:
-        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

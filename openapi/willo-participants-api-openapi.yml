@@ -183,21 +183,20 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Response:
+    IdvMedia:
       type: object
-      description: A participant's answer to a single interview question.
+      description: References to identity-verification media captured for a participant.
       properties:
-        question:
-          type: string
-          description: Key or prompt of the answered question.
-        media_url:
-          type: string
-          format: uri
-          description: URL to the recorded video or audio answer.
-        transcript:
-          type: string
-        score:
-          type: number
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+                format: uri
     ParticipantInput:
       type: object
       required:
@@ -245,20 +244,21 @@ components:
         created:
           type: string
           format: date-time
-    IdvMedia:
+    Response:
       type: object
-      description: References to identity-verification media captured for a participant.
+      description: A participant's answer to a single interview question.
       properties:
-        media:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              url:
-                type: string
-                format: uri
+        question:
+          type: string
+          description: Key or prompt of the answered question.
+        media_url:
+          type: string
+          format: uri
+          description: URL to the recorded video or audio answer.
+        transcript:
+          type: string
+        score:
+          type: number
     IdvInfo:
       type: object
       description: Identity-verification result and metadata for a participant.
@@ -275,15 +275,23 @@ components:
       properties:
         detail:
           type: string
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
   responses:
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
+    NotFound:
+      description: The requested resource does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource does not exist.
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
       content:
         application/json:
           schema:
@@ -294,14 +302,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    Key:
-      name: key
-      in: path
-      required: true
-      description: The unique key of the resource.
-      schema:
-        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

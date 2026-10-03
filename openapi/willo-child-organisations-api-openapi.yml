@@ -63,6 +63,19 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     ChildOrganisationInput:
       type: object
@@ -70,6 +83,11 @@ components:
       - name
       properties:
         name:
+          type: string
+    Error:
+      type: object
+      properties:
+        detail:
           type: string
     ChildOrganisation:
       type: object
@@ -79,24 +97,6 @@ components:
           type: string
         name:
           type: string
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
-  responses:
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

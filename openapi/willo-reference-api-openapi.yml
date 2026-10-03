@@ -62,7 +62,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Language:
+    Country:
       type: object
       properties:
         code:
@@ -74,7 +74,7 @@ components:
       properties:
         detail:
           type: string
-    Country:
+    Language:
       type: object
       properties:
         code:

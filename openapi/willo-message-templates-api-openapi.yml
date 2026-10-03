@@ -142,25 +142,34 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    MessageTemplate:
-      type: object
-      description: An invite, reminder, or success email/SMS template.
-      properties:
-        key:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-          enum:
-          - invite
-          - reminder
-          - success
-        subject:
-          type: string
-        body:
-          type: string
     MessageTemplateInput:
       type: object
       required:
@@ -179,38 +188,29 @@ components:
           type: string
         body:
           type: string
+    MessageTemplate:
+      type: object
+      description: An invite, reminder, or success email/SMS template.
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - invite
+          - reminder
+          - success
+        subject:
+          type: string
+        body:
+          type: string
     Error:
       type: object
       properties:
         detail:
           type: string
-  responses:
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    Key:
-      name: key
-      in: path
-      required: true
-      description: The unique key of the resource.
-      schema:
-        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey
