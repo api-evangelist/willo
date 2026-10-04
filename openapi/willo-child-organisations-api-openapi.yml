@@ -84,11 +84,6 @@ components:
       properties:
         name:
           type: string
-    Error:
-      type: object
-      properties:
-        detail:
-          type: string
     ChildOrganisation:
       type: object
       description: An organisation created under a parent organisation.
@@ -96,6 +91,11 @@ components:
         key:
           type: string
         name:
+          type: string
+    Error:
+      type: object
+      properties:
+        detail:
           type: string
   securitySchemes:
     apiKeyAuth:

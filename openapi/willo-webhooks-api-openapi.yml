@@ -125,23 +125,9 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    Key:
-      name: key
-      in: path
-      required: true
-      description: The unique key of the resource.
-      schema:
-        type: string
   responses:
     NotFound:
       description: The requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
       content:
         application/json:
           schema:
@@ -152,7 +138,31 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    WebhookInput:
+      type: object
+      required:
+      - target_url
+      - trigger
+      properties:
+        target_url:
+          type: string
+          format: uri
+        trigger:
+          type: string
+          enum:
+          - new_response
+          - stage_change
+          - new_comment
+          - new_score
+        is_active:
+          type: boolean
     Webhook:
       type: object
       description: A subscription that posts an event payload to a third-party endpoint.
@@ -176,24 +186,14 @@ components:
       properties:
         detail:
           type: string
-    WebhookInput:
-      type: object
-      required:
-      - target_url
-      - trigger
-      properties:
-        target_url:
-          type: string
-          format: uri
-        trigger:
-          type: string
-          enum:
-          - new_response
-          - stage_change
-          - new_comment
-          - new_score
-        is_active:
-          type: boolean
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

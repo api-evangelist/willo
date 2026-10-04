@@ -142,14 +142,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    Key:
-      name: key
-      in: path
-      required: true
-      description: The unique key of the resource.
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Interview:
       type: object
@@ -171,6 +182,21 @@ components:
         created:
           type: string
           format: date-time
+    InterviewInput:
+      type: object
+      required:
+      - title
+      properties:
+        title:
+          type: string
+        department:
+          type: string
+        language:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
     Question:
       type: object
       description: A single pre-defined question within an interview.
@@ -188,45 +214,19 @@ components:
         thinking_time:
           type: integer
           description: Thinking time in seconds before recording starts.
-    InterviewInput:
-      type: object
-      required:
-      - title
-      properties:
-        title:
-          type: string
-        department:
-          type: string
-        language:
-          type: string
-        questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Question'
     Error:
       type: object
       properties:
         detail:
           type: string
-  responses:
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey

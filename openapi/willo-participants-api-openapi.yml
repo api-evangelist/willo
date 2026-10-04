@@ -182,21 +182,52 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    IdvMedia:
+    IdvInfo:
       type: object
-      description: References to identity-verification media captured for a participant.
+      description: Identity-verification result and metadata for a participant.
       properties:
-        media:
-          type: array
-          items:
-            type: object
-            properties:
-              type:
-                type: string
-              url:
-                type: string
-                format: uri
+        status:
+          type: string
+        country:
+          type: string
+        checked_at:
+          type: string
+          format: date-time
+    Response:
+      type: object
+      description: A participant's answer to a single interview question.
+      properties:
+        question:
+          type: string
+          description: Key or prompt of the answered question.
+        media_url:
+          type: string
+          format: uri
+          description: URL to the recorded video or audio answer.
+        transcript:
+          type: string
+        score:
+          type: number
     ParticipantInput:
       type: object
       required:
@@ -215,6 +246,20 @@ components:
           type: string
         stage:
           type: string
+    IdvMedia:
+      type: object
+      description: References to identity-verification media captured for a participant.
+      properties:
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              url:
+                type: string
+                format: uri
     Participant:
       type: object
       description: A candidate invited to an interview.
@@ -244,32 +289,6 @@ components:
         created:
           type: string
           format: date-time
-    Response:
-      type: object
-      description: A participant's answer to a single interview question.
-      properties:
-        question:
-          type: string
-          description: Key or prompt of the answered question.
-        media_url:
-          type: string
-          format: uri
-          description: URL to the recorded video or audio answer.
-        transcript:
-          type: string
-        score:
-          type: number
-    IdvInfo:
-      type: object
-      description: Identity-verification result and metadata for a participant.
-      properties:
-        status:
-          type: string
-        country:
-          type: string
-        checked_at:
-          type: string
-          format: date-time
     Error:
       type: object
       properties:
@@ -283,25 +302,6 @@ components:
       description: The unique key of the resource.
       schema:
         type: string
-  responses:
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey

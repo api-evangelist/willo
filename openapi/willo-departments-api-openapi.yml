@@ -142,26 +142,26 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    Key:
-      name: key
-      in: path
-      required: true
-      description: The unique key of the resource.
-      schema:
-        type: string
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    DepartmentInput:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        is_global:
-          type: boolean
-        branding:
-          type: object
     Department:
       type: object
       description: A sub-division of the account, shown as a "Company" in the UI.
@@ -176,30 +176,30 @@ components:
         branding:
           type: object
           description: Optional branding overrides for this department.
+    DepartmentInput:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        is_global:
+          type: boolean
+        branding:
+          type: object
     Error:
       type: object
       properties:
         detail:
           type: string
-  responses:
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    Key:
+      name: key
+      in: path
+      required: true
+      description: The unique key of the resource.
+      schema:
+        type: string
   securitySchemes:
     apiKeyAuth:
       type: apiKey
