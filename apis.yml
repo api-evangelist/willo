@@ -229,6 +229,9 @@ apis:
   - type: OpenCollection
     url: collections/willo.opencollection.json
 common:
+- type: CapabilityMap
+  url: capabilities/willo-capability-edges.yml
+  name: Willo Business Capability Map
 - type: AgenticAccess
   url: agentic-access/willo-agentic-access.yml
 - type: TrustCenter

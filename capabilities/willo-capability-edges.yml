@@ -1,0 +1,58 @@
+slug: willo
+provider: Willo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Interviews
+  spec_file: willo-interviews-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.88
+  evidence: 'POST /interviews/ ''Create Interview''; vendor: ''asynchronous ("one-way") video interviewing
+    and screening platform ... embed video interviewing into a job board, ATS'''
+  reason: Full lifecycle management of candidate interviews for recruiting workflows, explicitly positioned
+    for ATS/job-board integration, which is squarely sourcing/recruiting/screening under Talent Acquisition
+    Management.
+- tag: Interview Templates
+  spec_file: willo-interview-templates-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.85
+  evidence: POST /interview-templates/{key}/interviews/ 'Create Interview from Template'; schemas InterviewTemplate,
+    Question
+  reason: Reusable interview question templates used to spin up candidate interviews on an asynchronous
+    video interviewing/screening platform — this realises candidate screening within Talent Acquisition
+    Management.
+- tag: Participants
+  spec_file: willo-participants-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.85
+  evidence: POST /participants/ inviteParticipant Invite Participant; GET /participants/{key}/idv-info/
+    Participant Identity Verification Details
+  reason: Participants are the candidates invited to record one-way video interviews, including identity
+    verification of the interviewee. This is squarely candidate sourcing/screening within talent acquisition,
+    whoever embeds it.
+- tag: Webhooks
+  spec_file: willo-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.7
+  evidence: 'POST /webhooks/ createWebhook Create Webhook; schemas: Webhook, WebhookInput'
+  reason: Full CRUD lifecycle over outbound webhook subscriptions exposed to integrators of this SaaS,
+    which is precisely Webhook & Event Subscription Management in the frame. Mapped with moderate confidence
+    because webhook CRUD is also plain integration plumbing.
