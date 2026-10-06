@@ -54,7 +54,7 @@ tags_raw:
 - Screening
 - Async Video
 created: '2026-07-10'
-modified: '2026-07-10'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: willo:willo-child-organisations-api
@@ -229,6 +229,8 @@ apis:
   - type: OpenCollection
     url: collections/willo.opencollection.json
 common:
+- url: https://www.willo.video/blog/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/willo-capability-edges.yml
   name: Willo Business Capability Map
