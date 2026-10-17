@@ -109,39 +109,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: No valid API key was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was unacceptable, often due to a missing required parameter.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    InterviewTemplate:
-      type: object
-      properties:
-        key:
-          type: string
-        title:
-          type: string
-        category:
-          type: string
-        questions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Question'
     Interview:
       type: object
       description: A named set of pre-defined questions; typically a "job" in an ATS.
@@ -162,6 +130,36 @@ components:
         created:
           type: string
           format: date-time
+    Question:
+      type: object
+      description: A single pre-defined question within an interview.
+      properties:
+        prompt:
+          type: string
+        type:
+          type: string
+          description: Answer type, for example video, audio, or text.
+        max_duration:
+          type: integer
+          description: Maximum answer duration in seconds.
+        max_retakes:
+          type: integer
+        thinking_time:
+          type: integer
+          description: Thinking time in seconds before recording starts.
+    InterviewTemplate:
+      type: object
+      properties:
+        key:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
     InterviewInput:
       type: object
       required:
@@ -184,23 +182,6 @@ components:
           type: string
         name:
           type: string
-    Question:
-      type: object
-      description: A single pre-defined question within an interview.
-      properties:
-        prompt:
-          type: string
-        type:
-          type: string
-          description: Answer type, for example video, audio, or text.
-        max_duration:
-          type: integer
-          description: Maximum answer duration in seconds.
-        max_retakes:
-          type: integer
-        thinking_time:
-          type: integer
-          description: Thinking time in seconds before recording starts.
     Error:
       type: object
       properties:
@@ -214,6 +195,25 @@ components:
       description: The unique key of the resource.
       schema:
         type: string
+  responses:
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: No valid API key was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was unacceptable, often due to a missing required parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKeyAuth:
       type: apiKey
